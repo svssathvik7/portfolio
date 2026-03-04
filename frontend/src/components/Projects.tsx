@@ -207,6 +207,23 @@ export default function Projects() {
             </div>
           ))}
         </div>
+
+        <p
+          className='mt-10 text-center text-sm sm:text-base'
+          style={{ color: 'var(--text-muted)' }}
+        >
+          And many more —{' '}
+          <a
+            href='https://github.com/svssathvik7'
+            target='_blank'
+            rel='noopener noreferrer'
+            className='font-medium transition-colors hover:underline'
+            style={{ color: 'var(--primary)' }}
+            aria-label='View more projects on GitHub'
+          >
+            explore on GitHub
+          </a>
+        </p>
       </div>
     </section>
   );
