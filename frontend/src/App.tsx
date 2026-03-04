@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import Connect from './components/Connect';
 import Experience from './components/Experience';
+import Projects from './components/Projects';
 import GoToTop from './components/GoToTop';
 import Navbar from './components/Navbar';
 import { applyTheme, getInitialTheme, type ThemeMode } from './theme';
@@ -120,6 +121,7 @@ function App() {
       </section>
 
       <Experience />
+      <Projects />
       <Connect />
       <GoToTop />
     </main>
