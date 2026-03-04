@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import Connect from './components/Connect';
 import Experience from './components/Experience';
 import GoToTop from './components/GoToTop';
 import Navbar from './components/Navbar';
@@ -119,6 +120,7 @@ function App() {
       </section>
 
       <Experience />
+      <Connect />
       <GoToTop />
     </main>
   );
