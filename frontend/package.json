@@ -15,7 +15,9 @@
     "react-dom": "^19.2.0"
   },
   "optionalDependencies": {
-    "@rollup/rollup-linux-x64-gnu": "*"
+    "@rollup/rollup-linux-x64-gnu": "*",
+    "lightningcss-linux-x64-gnu": "1.31.1",
+    "lightningcss-linux-arm64-gnu": "1.31.1"
   },
   "devDependencies": {
     "@eslint/js": "^9.39.1",
