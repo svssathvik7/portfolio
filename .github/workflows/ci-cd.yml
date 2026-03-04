@@ -19,14 +19,8 @@ permissions:
 
 jobs:
   build:
-    name: Build checks (frontend + backend)
+    name: Build frontend
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        project: [frontend, backend]
-    defaults:
-      run:
-        working-directory: ${{ matrix.project }}
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -37,17 +31,14 @@ jobs:
           bun-version: latest
 
       - name: Clean install (fix Rollup optional deps on Linux)
-        run: |
-          rm -rf ${{ github.workspace }}/node_modules
-          rm -rf ${{ github.workspace }}/${{ matrix.project }}/node_modules
+        run: rm -rf node_modules frontend/node_modules
 
       - name: Install dependencies
-        run: |
-          rm -rf node_modules
-          bun install
+        run: bun install
 
       - name: Build
         run: bun run build
+        working-directory: frontend
 
   cleanup-preview:
     name: Cleanup PR preview deployment

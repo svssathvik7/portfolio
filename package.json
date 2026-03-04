@@ -8,15 +8,10 @@
   "scripts": {
     "build": "npm run build -w frontend",
     "prepare": "husky || true",
-    "check": "npm run check --workspaces --if-present",
-    "lint": "npm run lint --workspaces --if-present",
-    "check:frontend": "npm run check -w frontend",
-    "check:backend": "npm run check -w backend",
-    "lint:frontend": "npm run lint -w frontend",
-    "lint:backend": "npm run lint -w backend"
+    "check": "npm run check -w frontend",
+    "lint": "npm run lint -w frontend"
   },
   "workspaces": [
-    "frontend",
-    "backend"
+    "frontend"
   ]
 }
