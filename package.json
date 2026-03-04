@@ -1,0 +1,19 @@
+{
+  "name": "portfolio",
+  "private": true,
+  "devDependencies": {
+    "typescript": "~5.9.3"
+  },
+  "scripts": {
+    "check": "npm run check --workspaces --if-present",
+    "lint": "npm run lint --workspaces --if-present",
+    "check:frontend": "npm run check -w frontend",
+    "check:backend": "npm run check -w backend",
+    "lint:frontend": "npm run lint -w frontend",
+    "lint:backend": "npm run lint -w backend"
+  },
+  "workspaces": [
+    "frontend",
+    "backend"
+  ]
+}
