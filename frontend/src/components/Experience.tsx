@@ -76,11 +76,11 @@ function TimelineEntryCard({
       </div>
 
       <div
-        className={`flex-1 pb-10 sm:pb-12 ${
+        className={`flex-1 pb-10 sm:pb-12 transition-all duration-300 hover:-translate-y-0.5 ${
           entry.isActive
             ? 'rounded-xl border-2 border-[var(--primary)]'
-            : 'rounded-xl border border-[var(--border)]'
-        } bg-[var(--bg-elevated)] p-5 shadow-sm transition-colors sm:p-6`}
+            : 'rounded-xl border border-[var(--border)] hover:border-[var(--primary)]/50'
+        } bg-[var(--bg-elevated)] p-5 shadow-sm sm:p-6`}
       >
         <div className='flex flex-col gap-2 sm:flex-row sm:flex-wrap sm:items-center sm:gap-3'>
           <h3 className='text-lg font-semibold text-[var(--text)] sm:text-xl'>
