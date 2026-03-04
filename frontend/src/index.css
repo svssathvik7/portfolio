@@ -45,3 +45,11 @@ body {
   background: var(--bg);
   color: var(--text);
 }
+
+::selection {
+  background-color: color-mix(in srgb, var(--primary) 35%, transparent);
+}
+
+::-moz-selection {
+  background-color: color-mix(in srgb, var(--primary) 35%, transparent);
+}
