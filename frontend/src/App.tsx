@@ -120,7 +120,7 @@ function App() {
 
           {/* Tech stack pills */}
           <div className='mt-10 flex flex-wrap gap-2'>
-            {['Rust', 'TypeScript', 'Multi-chain'].map((tag) => (
+            {['Rust', 'TypeScript', 'Bitcoin', 'Ethereum', 'Solana', 'Sui'].map((tag) => (
               <span
                 key={tag}
                 className='rounded-full border border-[var(--border)] bg-[var(--bg-elevated)] px-4 py-1.5 font-mono text-xs font-medium text-[var(--text-muted)] sm:text-sm'
