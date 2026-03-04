@@ -1,0 +1,61 @@
+name: CI + Deploy
+
+on:
+  pull_request:
+    branches: [ main ]
+  push:
+    branches: [ main ]
+
+jobs:
+  build:
+    name: Build checks (frontend + backend)
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        project: [frontend, backend]
+    defaults:
+      run:
+        working-directory: ${{ matrix.project }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+          cache-dependency-path: ${{ matrix.project }}/package-lock.json
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build
+        run: npm run build
+
+  deploy-preview:
+    name: PR Preview deployment
+    if: github.event_name == 'pull_request'
+    needs: build
+    runs-on: ubuntu-latest
+    environment: preview
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Preview deployment placeholder
+        run: |
+          echo "Deploy preview for frontend/backend here"
+          echo "PR #${{ github.event.pull_request.number }}"
+
+  deploy-production:
+    name: Production deployment
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    needs: build
+    runs-on: ubuntu-latest
+    environment: production
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Production deployment placeholder
+        run: |
+          echo "Deploy production for frontend/backend here"
