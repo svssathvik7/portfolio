@@ -178,7 +178,7 @@ export default function Experience() {
             style={{ backgroundColor: 'var(--border)' }}
             aria-hidden
           />
-          <div className="flex flex-col">
+          <div className="flex flex-col gap-8 sm:gap-10">
             {ENTRIES.map((entry, i) => (
               <div
                 key={entry.id}
