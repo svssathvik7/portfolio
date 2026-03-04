@@ -1,4 +1,4 @@
-export type ThemeMode = 'light' | 'dark'
+export type ThemeMode = 'light' | 'dark';
 
 export const themePalettes = {
   light: {
@@ -25,23 +25,25 @@ export const themePalettes = {
     '--ring': '#14b8a6',
     '--accent-warm': '#f59e0b',
   },
-} as const
+} as const;
 
 export function applyTheme(mode: ThemeMode) {
-  const root = document.documentElement
-  const palette = themePalettes[mode]
+  const root = document.documentElement;
+  const palette = themePalettes[mode];
 
   Object.entries(palette).forEach(([token, value]) => {
-    root.style.setProperty(token, value)
-  })
+    root.style.setProperty(token, value);
+  });
 
-  root.classList.toggle('dark', mode === 'dark')
-  localStorage.setItem('theme-mode', mode)
+  root.classList.toggle('dark', mode === 'dark');
+  localStorage.setItem('theme-mode', mode);
 }
 
 export function getInitialTheme(): ThemeMode {
-  const saved = localStorage.getItem('theme-mode')
-  if (saved === 'light' || saved === 'dark') return saved
+  const saved = localStorage.getItem('theme-mode');
+  if (saved === 'light' || saved === 'dark') return saved;
 
-  return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'
+  return window.matchMedia('(prefers-color-scheme: dark)').matches
+    ? 'dark'
+    : 'light';
 }
