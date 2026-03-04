@@ -4,11 +4,15 @@ Monorepo with:
 - `frontend`: React + TypeScript + Tailwind CSS (Vite)
 - `backend`: Hono + TypeScript
 
+## Runtime
+
+This repo uses **Bun** (not npm).
+
 ## Scripts
 
 From each package:
-- Frontend: `npm run dev`, `npm run build`
-- Backend: `npm run dev`, `npm run build`
+- Frontend: `bun run dev`, `bun run build`
+- Backend: `bun run dev`, `bun run build`
 
 ## CI/CD
 
