@@ -32,7 +32,7 @@ function NavLink({
       {label}
       {isActive && (
         <span
-          className="absolute bottom-0 left-4 right-4 h-0.5 rounded-full sm:left-5 sm:right-5"
+          className="absolute bottom-0 left-4 right-4 h-0.5 rounded-full transition-all duration-300 sm:left-5 sm:right-5"
           style={{ backgroundColor: 'var(--primary)' }}
           aria-hidden
         />

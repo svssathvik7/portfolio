@@ -99,7 +99,7 @@ function ProjectCard({
     </>
   );
 
-  const cardClassName = `group block min-w-0 rounded-2xl border border-[var(--border)] p-5 transition-all duration-300 hover:-translate-y-1 hover:border-[var(--primary)] hover:shadow-[0_0_24px_color-mix(in_srgb,var(--primary)_15%,transparent)] focus:outline-none focus:ring-2 focus:ring-[var(--ring)] focus:ring-offset-2 sm:p-6 ${
+  const cardClassName = `group block min-w-0 rounded-2xl border border-[var(--border)] p-5 transition-all duration-300 hover:-translate-y-1 hover:border-[var(--primary)] hover:shadow-[0_0_24px_color-mix(in_srgb,var(--primary)_15%,transparent)] active:scale-[0.99] focus:outline-none focus:ring-2 focus:ring-[var(--ring)] focus:ring-offset-2 sm:p-6 ${
     isVisible ? 'translate-y-0 opacity-100' : 'translate-y-4 opacity-0'
   }`;
   const cardStyle = {
@@ -217,7 +217,7 @@ export default function Projects() {
             href='https://github.com/svssathvik7'
             target='_blank'
             rel='noopener noreferrer'
-            className='font-medium transition-colors hover:underline'
+            className='font-medium transition-all duration-200 hover:underline hover:opacity-90'
             style={{ color: 'var(--primary)' }}
             aria-label='View more projects on GitHub'
           >
