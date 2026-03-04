@@ -1,22 +1,22 @@
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react';
 
-type EntryType = 'Work' | 'Education'
+type EntryType = 'Work' | 'Education';
 
 interface TimelineEntry {
-  id: string
-  role: string
-  org: string
-  duration: string
-  type: EntryType
-  description: string
-  tags: string[]
-  isActive?: boolean
+  id: string;
+  role: string;
+  org: string;
+  duration: string;
+  type: EntryType;
+  description: string;
+  tags: string[];
+  isActive?: boolean;
 }
 
 const ENTRIES: TimelineEntry[] = [
   {
     id: 'garden',
-    role: 'Software Developer III',
+    role: 'Software Developer I',
     org: 'Garden Finance (Hashiraworks)',
     duration: 'September 30, 2025 – Present',
     type: 'Work',
@@ -36,7 +36,7 @@ const ENTRIES: TimelineEntry[] = [
     tags: ['Computer Science', 'Algorithms', 'Systems'],
     isActive: false,
   },
-]
+];
 
 function TimelineDot({ isActive }: { isActive?: boolean }) {
   return (
@@ -49,31 +49,29 @@ function TimelineDot({ isActive }: { isActive?: boolean }) {
     >
       {isActive && (
         <span
-          className="absolute inset-0 animate-ping rounded-full opacity-30"
+          className='absolute inset-0 animate-ping rounded-full opacity-30'
           style={{ backgroundColor: 'var(--primary)' }}
           aria-hidden
         />
       )}
     </div>
-  )
+  );
 }
 
 function TimelineEntryCard({
   entry,
   isVisible,
 }: {
-  entry: TimelineEntry
-  isVisible: boolean
+  entry: TimelineEntry;
+  isVisible: boolean;
 }) {
   return (
     <div
       className={`flex gap-4 transition-all duration-700 ease-out sm:gap-6 ${
-        isVisible
-          ? 'translate-y-0 opacity-100'
-          : 'translate-y-8 opacity-0'
+        isVisible ? 'translate-y-0 opacity-100' : 'translate-y-8 opacity-0'
       }`}
     >
-      <div className="flex flex-col items-center">
+      <div className='flex flex-col items-center'>
         <TimelineDot isActive={entry.isActive} />
       </div>
 
@@ -84,13 +82,13 @@ function TimelineEntryCard({
             : 'rounded-xl border border-[var(--border)]'
         } bg-[var(--bg-elevated)] p-5 shadow-sm transition-colors sm:p-6`}
       >
-        <div className="flex flex-col gap-2 sm:flex-row sm:flex-wrap sm:items-center sm:gap-3">
-          <h3 className="text-lg font-semibold text-[var(--text)] sm:text-xl">
+        <div className='flex flex-col gap-2 sm:flex-row sm:flex-wrap sm:items-center sm:gap-3'>
+          <h3 className='text-lg font-semibold text-[var(--text)] sm:text-xl'>
             {entry.role}
           </h3>
-          <div className="flex flex-wrap gap-2">
+          <div className='flex flex-wrap gap-2'>
             <span
-              className="inline-flex rounded-full px-3 py-0.5 text-xs font-medium"
+              className='inline-flex rounded-full px-3 py-0.5 text-xs font-medium'
               style={{
                 backgroundColor: 'var(--primary-soft)',
                 color: 'var(--primary)',
@@ -99,7 +97,7 @@ function TimelineEntryCard({
               {entry.type}
             </span>
             <span
-              className="inline-flex rounded-full border px-3 py-0.5 text-xs font-medium text-[var(--text-muted)]"
+              className='inline-flex rounded-full border px-3 py-0.5 text-xs font-medium text-[var(--text-muted)]'
               style={{ borderColor: 'var(--border)' }}
             >
               {entry.duration}
@@ -107,19 +105,19 @@ function TimelineEntryCard({
           </div>
         </div>
 
-        <p className="mt-1 text-sm font-medium text-[var(--primary)] sm:text-base">
+        <p className='mt-1 text-sm font-medium text-[var(--primary)] sm:text-base'>
           {entry.org}
         </p>
 
-        <p className="mt-3 text-sm leading-relaxed text-[var(--text-muted)] sm:text-base">
+        <p className='mt-3 text-sm leading-relaxed text-[var(--text-muted)] sm:text-base'>
           {entry.description}
         </p>
 
-        <div className="mt-4 flex flex-wrap gap-2">
+        <div className='mt-4 flex flex-wrap gap-2'>
           {entry.tags.map((tag) => (
             <span
               key={tag}
-              className="rounded-full border px-2.5 py-1 font-mono text-xs text-[var(--text-muted)]"
+              className='rounded-full border px-2.5 py-1 font-mono text-xs text-[var(--text-muted)]'
               style={{ borderColor: 'var(--border)' }}
             >
               {tag}
@@ -128,63 +126,63 @@ function TimelineEntryCard({
         </div>
       </div>
     </div>
-  )
+  );
 }
 
 export default function Experience() {
-  const entryRefs = useRef<(HTMLDivElement | null)[]>([])
-  const [visibleEntries, setVisibleEntries] = useState<Set<number>>(new Set())
+  const entryRefs = useRef<(HTMLDivElement | null)[]>([]);
+  const [visibleEntries, setVisibleEntries] = useState<Set<number>>(new Set());
 
   useEffect(() => {
-    const observers: IntersectionObserver[] = []
-    const refs = entryRefs.current
+    const observers: IntersectionObserver[] = [];
+    const refs = entryRefs.current;
 
     refs.forEach((el, i) => {
-      if (!el) return
+      if (!el) return;
       const observer = new IntersectionObserver(
         ([entry]) => {
           if (entry?.isIntersecting) {
-            setVisibleEntries((prev) => new Set(prev).add(i))
+            setVisibleEntries((prev) => new Set(prev).add(i));
           }
         },
-        { threshold: 0.2, rootMargin: '0px 0px -30px 0px' }
-      )
-      observer.observe(el)
-      observers.push(observer)
-    })
+        { threshold: 0.2, rootMargin: '0px 0px -30px 0px' },
+      );
+      observer.observe(el);
+      observers.push(observer);
+    });
 
-    return () => observers.forEach((o) => o.disconnect())
-  }, [])
+    return () => observers.forEach((o) => o.disconnect());
+  }, []);
 
   return (
     <section
-      id="experience"
-      className="w-full border-t py-16 sm:py-20 md:py-24"
+      id='experience'
+      className='w-full border-t py-16 sm:py-20 md:py-24'
       style={{ borderColor: 'var(--border)', backgroundColor: 'var(--bg)' }}
-      aria-labelledby="experience-heading"
+      aria-labelledby='experience-heading'
     >
-      <div className="mx-auto max-w-3xl px-6 sm:px-10 lg:px-12">
+      <div className='mx-auto max-w-3xl px-6 sm:px-10 lg:px-12'>
         <h2
-          id="experience-heading"
-          className="font-serif text-2xl font-bold tracking-tight text-[var(--text)] sm:text-3xl"
+          id='experience-heading'
+          className='font-serif text-2xl font-bold tracking-tight text-[var(--text)] sm:text-3xl'
           style={{ fontFamily: 'var(--font-serif)' }}
         >
           Experience
         </h2>
 
-        <div className="relative mt-10">
+        <div className='relative mt-10'>
           {/* Timeline line */}
           <div
-            className="absolute left-[7px] top-5 bottom-8 w-px sm:left-[9px]"
+            className='absolute left-[7px] top-5 bottom-8 w-px sm:left-[9px]'
             style={{ backgroundColor: 'var(--border)' }}
             aria-hidden
           />
-          <div className="flex flex-col gap-8 sm:gap-10">
+          <div className='flex flex-col gap-8 sm:gap-10'>
             {ENTRIES.map((entry, i) => (
               <div
                 key={entry.id}
                 ref={(el) => {
-                  entryRefs.current[i] = el
+                  entryRefs.current[i] = el;
                 }}
               >
                 <TimelineEntryCard
@@ -197,5 +195,5 @@ export default function Experience() {
         </div>
       </div>
     </section>
-  )
+  );
 }
