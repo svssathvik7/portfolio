@@ -54,7 +54,7 @@ function ContactCard({
       href={item.href}
       {...linkProps}
       aria-label={`${item.label}: ${item.value}`}
-      className={`group block rounded-2xl border border-[var(--border)] p-5 transition-all duration-300 hover:-translate-y-1 hover:border-[var(--primary)] hover:shadow-[0_0_24px_color-mix(in_srgb,var(--primary)_15%,transparent)] focus:outline-none focus:ring-2 focus:ring-[var(--ring)] focus:ring-offset-2 sm:p-6 ${
+      className={`group block min-w-0 rounded-2xl border border-[var(--border)] p-5 transition-all duration-300 hover:-translate-y-1 hover:border-[var(--primary)] hover:shadow-[0_0_24px_color-mix(in_srgb,var(--primary)_15%,transparent)] focus:outline-none focus:ring-2 focus:ring-[var(--ring)] focus:ring-offset-2 sm:p-6 ${
         isVisible ? 'translate-y-0 opacity-100' : 'translate-y-4 opacity-0'
       }`}
       style={{
@@ -69,7 +69,7 @@ function ContactCard({
         {item.label}
       </h3>
       <p
-        className="mt-1 font-medium transition-colors duration-300 group-hover:text-[var(--primary)]"
+        className="mt-1 min-w-0 break-words font-medium transition-colors duration-300 group-hover:text-[var(--primary)]"
         style={{ color: 'var(--primary)' }}
       >
         {item.value}
