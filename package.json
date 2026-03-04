@@ -2,9 +2,12 @@
   "name": "portfolio",
   "private": true,
   "devDependencies": {
+    "husky": "^9.1.7",
     "typescript": "~5.9.3"
   },
   "scripts": {
+    "build": "npm run build -w frontend",
+    "prepare": "husky || true",
     "check": "npm run check --workspaces --if-present",
     "lint": "npm run lint --workspaces --if-present",
     "check:frontend": "npm run check -w frontend",

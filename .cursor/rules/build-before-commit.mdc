@@ -1,0 +1,12 @@
+---
+description: Run build before considering changes complete
+alwaysApply: true
+---
+
+# Build Before Commit
+
+**Before considering any code change complete, run the build.** Only treat the change as done if the build succeeds.
+
+- Run `bun run build` from project root (or `bun run build` in frontend)
+- If the build fails, fix the errors before finishing
+- Do not leave the user with a broken build
