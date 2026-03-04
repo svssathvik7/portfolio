@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import Experience from './components/Experience';
+import GoToTop from './components/GoToTop';
 import Navbar from './components/Navbar';
 import { applyTheme, getInitialTheme, type ThemeMode } from './theme';
 
@@ -118,6 +119,7 @@ function App() {
       </section>
 
       <Experience />
+      <GoToTop />
     </main>
   );
 }
