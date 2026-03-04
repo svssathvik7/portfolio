@@ -1,5 +1,7 @@
 import { useEffect, useState } from 'react';
 import Experience from './components/Experience';
+import GoToTop from './components/GoToTop';
+import Navbar from './components/Navbar';
 import { applyTheme, getInitialTheme, type ThemeMode } from './theme';
 
 function App() {
@@ -29,40 +31,12 @@ function App() {
         }}
       />
 
-      <section className='relative mx-auto flex min-h-screen w-full max-w-3xl flex-col px-6 py-12 sm:px-10 sm:py-16 lg:px-12 lg:py-20'>
-        <header className='flex items-center justify-end'>
-          <button
-            onClick={toggleTheme}
-            className='group flex h-10 w-10 items-center justify-center rounded-full border border-(--border) bg-(--bg-elevated)/80 text-(--text-muted) shadow-sm backdrop-blur-sm transition-all hover:border-(--primary) hover:text-(--text) focus:outline-none focusw:ring-2 focus:ring-(--ring)'
-            aria-label={
-              mode === 'light' ? 'Switch to dark mode' : 'Switch to light mode'
-            }
-          >
-            <svg
-              className='h-5 w-5 transition-transform group-hover:rotate-12'
-              fill='none'
-              stroke='currentColor'
-              viewBox='0 0 24 24'
-            >
-              {mode === 'light' ? (
-                <path
-                  strokeLinecap='round'
-                  strokeLinejoin='round'
-                  strokeWidth={2}
-                  d='M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z'
-                />
-              ) : (
-                <path
-                  strokeLinecap='round'
-                  strokeLinejoin='round'
-                  strokeWidth={2}
-                  d='M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z'
-                />
-              )}
-            </svg>
-          </button>
-        </header>
+      <Navbar onThemeToggle={toggleTheme} themeMode={mode} />
 
+      <section
+        id='hero'
+        className='relative mx-auto flex min-h-screen w-full max-w-3xl flex-col px-6 py-12 sm:px-10 sm:py-16 lg:px-12 lg:py-20'
+      >
         <div className='my-auto flex flex-col justify-center'>
           {/* Name */}
           <h1
@@ -145,6 +119,7 @@ function App() {
       </section>
 
       <Experience />
+      <GoToTop />
     </main>
   );
 }
