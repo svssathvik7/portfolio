@@ -38,30 +38,6 @@ const ENTRIES: TimelineEntry[] = [
   },
 ]
 
-function useIntersectionObserver(
-  ref: React.RefObject<HTMLElement | null>,
-  options?: IntersectionObserverInit
-) {
-  const [isVisible, setIsVisible] = useState(false)
-
-  useEffect(() => {
-    const el = ref.current
-    if (!el) return
-
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry?.isIntersecting) setIsVisible(true)
-      },
-      { threshold: 0.15, rootMargin: '0px 0px -50px 0px', ...options }
-    )
-
-    observer.observe(el)
-    return () => observer.disconnect()
-  }, [ref, options?.threshold, options?.rootMargin])
-
-  return isVisible
-}
-
 function TimelineDot({ isActive }: { isActive?: boolean }) {
   return (
     <div
@@ -156,9 +132,7 @@ function TimelineEntryCard({
 }
 
 export default function Experience() {
-  const sectionRef = useRef<HTMLElement>(null)
   const entryRefs = useRef<(HTMLDivElement | null)[]>([])
-  const isSectionVisible = useIntersectionObserver(sectionRef)
   const [visibleEntries, setVisibleEntries] = useState<Set<number>>(new Set())
 
   useEffect(() => {
@@ -184,7 +158,6 @@ export default function Experience() {
 
   return (
     <section
-      ref={sectionRef}
       className="w-full border-t py-16 sm:py-20 md:py-24"
       style={{ borderColor: 'var(--border)', backgroundColor: 'var(--bg)' }}
       aria-labelledby="experience-heading"
