@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import Experience from './components/Experience';
 import { applyTheme, getInitialTheme, type ThemeMode } from './theme';
 
 function App() {
@@ -142,6 +143,8 @@ function App() {
           </p>
         </footer>
       </section>
+
+      <Experience />
     </main>
   );
 }
