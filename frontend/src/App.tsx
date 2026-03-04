@@ -31,13 +31,17 @@ function App() {
 
         <div className="my-auto grid gap-6 lg:grid-cols-2 lg:gap-10">
           <article className="rounded-3xl border border-[var(--border)] bg-[var(--bg-elevated)] p-6 sm:p-8 lg:p-10">
-            <p className="text-sm font-medium text-[var(--primary)]">Custom Portfolio Build</p>
+            <p className="text-sm font-medium text-[var(--primary)]">Template Hero Dialogue</p>
             <h2 className="mt-3 text-3xl font-bold leading-tight sm:text-4xl lg:text-5xl">
-              Full-screen landing page with theme system from day one.
+              Hey, I’m <span className="text-[var(--primary)]">Your Name</span> — I build backend systems that stay reliable at scale.
             </h2>
             <p className="mt-4 max-w-xl text-sm leading-relaxed text-[var(--text-muted)] sm:text-base">
-              This layout is fully responsive and designed to be a clean base for your upcoming sections: projects,
-              experience, interests, and more.
+              I work across distributed services, APIs, and multi-chain infrastructure. Replace this copy with your
+              one-liner value proposition, current role, and strongest domain focus.
+            </p>
+            <p className="mt-3 max-w-xl text-sm leading-relaxed text-[var(--text-muted)] sm:text-base">
+              <strong>Template:</strong> “I help <em>[who]</em> achieve <em>[outcome]</em> by building <em>[what]</em> with
+              <em>[how/stack]</em>.”
             </p>
           </article>
 

@@ -2,9 +2,14 @@ name: CI + Deploy
 
 on:
   pull_request:
+    types: [opened, synchronize, reopened]
     branches: [ main ]
   push:
     branches: [ main ]
+
+permissions:
+  contents: read
+  pull-requests: write
 
 jobs:
   build:
@@ -37,13 +42,75 @@ jobs:
     needs: build
     runs-on: ubuntu-latest
     environment: preview
+    env:
+      CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+      CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+      CLOUDFLARE_PAGES_PROJECT: ${{ secrets.CLOUDFLARE_PAGES_PROJECT }}
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-      - name: Preview deployment placeholder
+
+      - name: Setup Bun
+        uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: latest
+
+      - name: Install frontend deps
+        run: bun install --frozen-lockfile
+        working-directory: frontend
+
+      - name: Build frontend
+        run: bun run build
+        working-directory: frontend
+
+      - name: Deploy frontend preview to Cloudflare Pages
+        id: frontend
         run: |
-          echo "Deploy preview for frontend/backend here"
-          echo "PR #${{ github.event.pull_request.number }}"
+          if [ -z "$CLOUDFLARE_API_TOKEN" ] || [ -z "$CLOUDFLARE_ACCOUNT_ID" ] || [ -z "$CLOUDFLARE_PAGES_PROJECT" ]; then
+            echo "preview_url=" >> "$GITHUB_OUTPUT"
+            echo "missing=true" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+
+          bunx wrangler pages deploy frontend/dist \
+            --project-name "$CLOUDFLARE_PAGES_PROJECT" \
+            --branch "pr-${{ github.event.pull_request.number }}" \
+            --commit-dirty=true | tee preview.log
+
+          PREVIEW_URL=$(grep -Eo 'https://[a-z0-9-]+\.[a-z0-9-]+\.pages\.dev' preview.log | tail -n1)
+          if [ -z "$PREVIEW_URL" ]; then
+            PREVIEW_URL=$(grep -Eo 'https://[a-z0-9-]+\.pages\.dev' preview.log | tail -n1)
+          fi
+
+          echo "preview_url=$PREVIEW_URL" >> "$GITHUB_OUTPUT"
+          echo "missing=false" >> "$GITHUB_OUTPUT"
+
+      - name: Comment preview status on PR
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const url = `${{ toJson(steps.frontend.outputs.preview_url) }}`.replace(/"/g, "");
+            const missing = `${{ toJson(steps.frontend.outputs.missing) }}`.replace(/"/g, "") === "true";
+
+            const body = missing
+              ? [
+                  "⚠️ **Preview deployment not configured yet**",
+                  "Set these repo secrets to enable PR preview links:",
+                  "- `CLOUDFLARE_API_TOKEN`",
+                  "- `CLOUDFLARE_ACCOUNT_ID`",
+                  "- `CLOUDFLARE_PAGES_PROJECT`",
+                ].join("\n")
+              : [
+                  "✅ **PR preview is ready**",
+                  `- Frontend: ${url}`,
+                ].join("\n");
+
+            await github.rest.issues.createComment({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: context.payload.pull_request.number,
+              body,
+            });
 
   deploy-production:
     name: Production deployment
@@ -51,9 +118,35 @@ jobs:
     needs: build
     runs-on: ubuntu-latest
     environment: production
+    env:
+      CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+      CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+      CLOUDFLARE_PAGES_PROJECT: ${{ secrets.CLOUDFLARE_PAGES_PROJECT }}
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-      - name: Production deployment placeholder
+
+      - name: Setup Bun
+        uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: latest
+
+      - name: Install frontend deps
+        run: bun install --frozen-lockfile
+        working-directory: frontend
+
+      - name: Build frontend
+        run: bun run build
+        working-directory: frontend
+
+      - name: Deploy frontend to Cloudflare Pages (production)
         run: |
-          echo "Deploy production for frontend/backend here"
+          if [ -z "$CLOUDFLARE_API_TOKEN" ] || [ -z "$CLOUDFLARE_ACCOUNT_ID" ] || [ -z "$CLOUDFLARE_PAGES_PROJECT" ]; then
+            echo "Production deploy skipped: missing Cloudflare secrets."
+            exit 0
+          fi
+
+          bunx wrangler pages deploy frontend/dist \
+            --project-name "$CLOUDFLARE_PAGES_PROJECT" \
+            --branch "main" \
+            --commit-dirty=true
