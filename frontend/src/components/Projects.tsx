@@ -10,6 +10,23 @@ interface Project {
 
 const PROJECTS: Project[] = [
   {
+    id: 'garden-sdk',
+    title: 'Garden SDK',
+    href: 'https://www.npmjs.com/search?q=%40gardenfi%2Fcore',
+    description:
+      "TypeScript SDK wrapping the Garden backend for cross-chain atomic swaps. Led development of complete Bitcoin HTLC support, Bitcoin wallet connections (OKX, Unisat, Xverse), Sui integration, Litecoin support, and Spark (Bitcoin L2) support. Published as @gardenfi/core, @gardenfi/wallet-connectors, and related packages on npm.",
+    tags: [
+      'TypeScript',
+      'Bitcoin',
+      'HTLC',
+      'Sui',
+      'Litecoin',
+      'Spark',
+      'Wallet Connectors',
+      'Blockchain SDK',
+    ],
+  },
+  {
     id: 'garden-staking',
     title: 'Garden Staking & Distribution',
     href: 'https://app.garden.finance/stake',
