@@ -2,7 +2,7 @@ name: CI + Deploy
 
 on:
   pull_request:
-    types: [opened, synchronize, reopened]
+    types: [opened, synchronize, reopened, closed]
     branches: [ main ]
   push:
     branches: [ main ]
@@ -14,6 +14,7 @@ permissions:
 jobs:
   build:
     name: Build checks (frontend + backend)
+    if: github.event.action != 'closed'
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -45,7 +46,7 @@ jobs:
 
   deploy-preview:
     name: PR Preview deployment
-    if: github.event_name == 'pull_request'
+    if: github.event_name == 'pull_request' && github.event.action != 'closed'
     needs: build
     runs-on: ubuntu-latest
     environment: preview
@@ -120,6 +121,69 @@ jobs:
               repo: context.repo.repo,
               issue_number: context.payload.pull_request.number,
               body,
+            });
+
+  cleanup-preview:
+    name: Cleanup PR preview deployment
+    if: github.event_name == 'pull_request' && github.event.action == 'closed'
+    runs-on: ubuntu-latest
+    env:
+      CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+      CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+      CLOUDFLARE_PAGES_PROJECT: ${{ secrets.CLOUDFLARE_PAGES_PROJECT }}
+    steps:
+      - name: Delete Cloudflare Pages preview deployments for this PR
+        id: cleanup
+        run: |
+          if [ -z "$CLOUDFLARE_API_TOKEN" ] || [ -z "$CLOUDFLARE_ACCOUNT_ID" ] || [ -z "$CLOUDFLARE_PAGES_PROJECT" ]; then
+            echo "result=Skipped: missing Cloudflare secrets." >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+
+          BRANCH="pr-${{ github.event.pull_request.number }}"
+
+          # Fetch all preview deployments for this branch
+          DEPLOY_IDS=$(curl -s \
+            "https://api.cloudflare.com/client/v4/accounts/${CLOUDFLARE_ACCOUNT_ID}/pages/projects/${CLOUDFLARE_PAGES_PROJECT}/deployments?env=preview" \
+            -H "Authorization: Bearer ${CLOUDFLARE_API_TOKEN}" \
+            -H "Content-Type: application/json" \
+            | node -e "
+              let s='';
+              process.stdin.on('data', d => s+=d).on('end', () => {
+                const res = JSON.parse(s);
+                const ids = (res.result || [])
+                  .filter(d => d.deployment_trigger?.metadata?.branch === process.argv[1])
+                  .map(d => d.id);
+                process.stdout.write(ids.join(' '));
+              })
+            " "$BRANCH")
+
+          if [ -z "$DEPLOY_IDS" ]; then
+            echo "result=No preview deployments found for branch $BRANCH." >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+
+          DELETED=0
+          for id in $DEPLOY_IDS; do
+            STATUS=$(curl -s -o /dev/null -w "%{http_code}" -X DELETE \
+              "https://api.cloudflare.com/client/v4/accounts/${CLOUDFLARE_ACCOUNT_ID}/pages/projects/${CLOUDFLARE_PAGES_PROJECT}/deployments/${id}?force=true" \
+              -H "Authorization: Bearer ${CLOUDFLARE_API_TOKEN}")
+            echo "Deleted deployment $id — HTTP $STATUS"
+            DELETED=$((DELETED+1))
+          done
+
+          echo "result=Deleted $DELETED preview deployment(s) for branch $BRANCH." >> "$GITHUB_OUTPUT"
+
+      - name: Comment cleanup result on PR
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const result = `${{ toJson(steps.cleanup.outputs.result) }}`.replace(/"/g, "");
+            await github.rest.issues.createComment({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: context.payload.pull_request.number,
+              body: `🧹 **PR preview cleanup**\n${result}`,
             });
 
   deploy-production:
