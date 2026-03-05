@@ -109,15 +109,7 @@ function App() {
           </div>
         </div>
 
-        {/* Footer hint */}
-        <footer className='mt-auto pt-12'>
-          <p
-            className='font-mono text-xs text-[var(--text-muted)]/70'
-            style={{ fontFamily: 'var(--font-mono)' }}
-          >
-            Portfolio v1 — more sections coming soon
-          </p>
-        </footer>
+        <footer className='mt-auto pt-12' />
       </section>
 
       <Experience />
