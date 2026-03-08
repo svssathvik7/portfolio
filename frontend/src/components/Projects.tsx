@@ -41,18 +41,19 @@ const PROJECTS: Project[] = [
     ],
   },
   {
-    id: 'rpc-proxy-shield',
-    title: 'RPC Proxy Shield',
+    id: 'turbine-rpc-proxy',
+    title: 'Turbine RPC Proxy',
+    href: 'https://crates.io/crates/turbine-rpc-proxy',
     description:
-      'Minimalistic multi-chain RPC proxy with per-client optional policy enforcement. Supports EVM, Bitcoin, Solana, and Starknet. Delivers rate limiting, custom client-level controls, and infrastructure security—lightweight, production-minded, and chain-agnostic.',
+      'Multi-chain RPC proxy with intelligent endpoint rotation, health checks, and caching. Supports any JSON-RPC chain — EVM, Solana, Starknet, and more. Built in Rust for performance and reliability.',
     tags: [
       'Rust',
       'RPC',
       'Multi-Chain',
+      'Load Balancing',
+      'Health Checks',
+      'Caching',
       'Infrastructure',
-      'Security',
-      'Policy Engine',
-      'Load balancing',
     ],
   },
 ];
