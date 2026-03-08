@@ -45,7 +45,7 @@ const PROJECTS: Project[] = [
     title: 'Turbine RPC Proxy',
     href: 'https://crates.io/crates/turbine-rpc-proxy',
     description:
-      'Multi-chain RPC proxy with intelligent endpoint rotation, health checks, and caching. Supports any JSON-RPC chain — EVM, Solana, Starknet, and more. Built in Rust for performance and reliability.',
+      'Multi-chain RPC proxy with intelligent endpoint rotation, health checks, caching, and per-endpoint authentication (Basic Auth, Bearer, custom headers). Supports any JSON-RPC chain — EVM, Solana, Bitcoin, Starknet, and more. Built in Rust for performance and reliability.',
     tags: [
       'Rust',
       'RPC',
@@ -53,6 +53,7 @@ const PROJECTS: Project[] = [
       'Load Balancing',
       'Health Checks',
       'Caching',
+      'Authentication',
       'Infrastructure',
     ],
   },
