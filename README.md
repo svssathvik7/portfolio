@@ -1,23 +1,40 @@
-# portfolio
+# Sathvik's Portfolio
 
-Monorepo with:
-- `frontend`: React + TypeScript + Tailwind CSS (Vite)
-- `backend`: Hono + TypeScript
+Personal portfolio site — built to showcase my work, experience, and ways to connect.
 
-## Runtime
+**Live:** _[add deployed URL here]_
 
-This repo uses **Bun** (not npm).
+## What's Inside
 
-## Scripts
+- **Hero** — Quick intro, current role at Garden Finance, and core tech stack (Rust, TypeScript, Bitcoin, Ethereum, Solana, Sui)
+- **Experience** — Timeline of work and education history
+- **Projects** — Featured work including Garden SDK, Garden Staking & Distribution, and Turbine RPC Proxy
+- **Connect** — Links to Gmail, Instagram, X, and GitHub
 
-From each package:
-- Frontend: `bun run dev`, `bun run build`
-- Backend: `bun run dev`, `bun run build`
+## Tech Stack
+
+| Layer    | Stack                              |
+| -------- | ---------------------------------- |
+| Frontend | React 19, TypeScript, Tailwind CSS |
+| Backend  | Hono, TypeScript                   |
+| Build    | Vite                               |
+| Runtime  | Bun                                |
+
+## Getting Started
+
+```bash
+# install dependencies
+bun install
+
+# run frontend
+cd frontend && bun run dev
+
+# run backend
+cd backend && bun run dev
+```
 
 ## CI/CD
 
-- CI build checks for both frontend and backend on PRs and pushes to `main`
-- Preview deployment job on PRs
-- Production deployment job on pushes to `main`
-
-Deployment jobs are scaffolded and can be wired to your provider by setting required secrets.
+- Build checks on PRs and pushes to `main`
+- Preview deployments on PRs
+- Production deployment on push to `main`

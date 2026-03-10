@@ -3,7 +3,6 @@ import { useEffect, useRef, useState } from 'react';
 interface ContactItem {
   id: string;
   label: string;
-  value: string;
   href: string;
   caption: string;
   isExternal: boolean;
@@ -13,7 +12,6 @@ const CONTACTS: ContactItem[] = [
   {
     id: 'gmail',
     label: 'Gmail',
-    value: 'svssathvik77@gmail.com',
     href: 'mailto:svssathvik77@gmail.com',
     caption: 'For professional collaborations and opportunities.',
     isExternal: false,
@@ -21,7 +19,6 @@ const CONTACTS: ContactItem[] = [
   {
     id: 'instagram',
     label: 'Instagram',
-    value: '@svssathvik',
     href: 'https://instagram.com/svssathvik',
     caption: 'For personal connects and behind-the-scenes.',
     isExternal: true,
@@ -29,7 +26,6 @@ const CONTACTS: ContactItem[] = [
   {
     id: 'x',
     label: 'X',
-    value: '@stvk231133',
     href: 'https://x.com/stvk231133',
     caption: 'For opinions, tech thoughts, and random takes.',
     isExternal: true,
@@ -37,7 +33,6 @@ const CONTACTS: ContactItem[] = [
   {
     id: 'github',
     label: 'GitHub',
-    value: '@svssathvik7',
     href: 'https://github.com/svssathvik7',
     caption: 'For code, repos, and open-source contributions.',
     isExternal: true,
@@ -61,7 +56,7 @@ function ContactCard({
     <a
       href={item.href}
       {...linkProps}
-      aria-label={`${item.label}: ${item.value}`}
+      aria-label={item.label}
       className={`group block min-w-0 rounded-2xl border border-[var(--border)] p-5 transition-all duration-300 hover:-translate-y-1 hover:border-[var(--primary)] hover:shadow-[0_0_24px_color-mix(in_srgb,var(--primary)_15%,transparent)] focus:outline-none focus:ring-2 focus:ring-[var(--ring)] focus:ring-offset-2 sm:p-6 ${
         isVisible ? 'translate-y-0 opacity-100' : 'translate-y-4 opacity-0'
       }`}
@@ -76,12 +71,6 @@ function ContactCard({
       >
         {item.label}
       </h3>
-      <p
-        className='mt-1 min-w-0 break-words font-medium transition-colors duration-300 group-hover:text-[var(--primary)]'
-        style={{ color: 'var(--primary)' }}
-      >
-        {item.value}
-      </p>
       <p
         className='mt-2 text-sm leading-relaxed'
         style={{ color: 'var(--text-muted)' }}
