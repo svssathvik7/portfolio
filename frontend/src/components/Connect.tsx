@@ -4,6 +4,7 @@ interface ContactItem {
   id: string;
   label: string;
   href: string;
+  caption: string;
   isExternal: boolean;
 }
 
@@ -12,24 +13,28 @@ const CONTACTS: ContactItem[] = [
     id: 'gmail',
     label: 'Gmail',
     href: 'mailto:svssathvik77@gmail.com',
+    caption: 'For professional collaborations and opportunities.',
     isExternal: false,
   },
   {
     id: 'instagram',
     label: 'Instagram',
     href: 'https://instagram.com/svssathvik',
+    caption: 'For personal connects and behind-the-scenes.',
     isExternal: true,
   },
   {
     id: 'x',
     label: 'X',
     href: 'https://x.com/stvk231133',
+    caption: 'For opinions, tech thoughts, and random takes.',
     isExternal: true,
   },
   {
     id: 'github',
     label: 'GitHub',
     href: 'https://github.com/svssathvik7',
+    caption: 'For code, repos, and open-source contributions.',
     isExternal: true,
   },
 ];
@@ -66,6 +71,12 @@ function ContactCard({
       >
         {item.label}
       </h3>
+      <p
+        className='mt-2 text-sm leading-relaxed'
+        style={{ color: 'var(--text-muted)' }}
+      >
+        {item.caption}
+      </p>
     </a>
   );
 }
