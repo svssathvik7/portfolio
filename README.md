@@ -5,6 +5,10 @@
 </p>
 
 <p align="center">
+  <a href="https://sathvik-portfolio.pages.dev"><strong>sathvik-portfolio.pages.dev</strong></a>
+</p>
+
+<p align="center">
   <a href="https://github.com/svssathvik7/portfolio/actions/workflows/ci-cd.yml">
     <img src="https://github.com/svssathvik7/portfolio/actions/workflows/ci-cd.yml/badge.svg" alt="CI + Deploy" />
   </a>
