@@ -43,7 +43,7 @@ function TimelineDot({ isActive }: { isActive?: boolean }) {
     <div
       className={`relative flex h-4 w-4 shrink-0 items-center justify-center rounded-full border-2 transition-colors sm:h-5 sm:w-5 ${
         isActive
-          ? 'border-[var(--primary)] bg-[var(--primary)]'
+          ? 'border-[var(--primary)] bg-[var(--primary)] shadow-[0_0_12px_var(--primary)]'
           : 'border-[var(--border)] bg-[var(--bg-elevated)]'
       }`}
     >
@@ -78,9 +78,9 @@ function TimelineEntryCard({
       <div
         className={`flex-1 pb-10 sm:pb-12 ${
           entry.isActive
-            ? 'rounded-xl border-2 border-[var(--primary)]'
+            ? 'rounded-xl border-2 border-[var(--primary)] shadow-[0_0_24px_color-mix(in_srgb,var(--primary)_12%,transparent)]'
             : 'rounded-xl border border-[var(--border)]'
-        } bg-[var(--bg-elevated)] p-5 shadow-sm transition-colors sm:p-6`}
+        } bg-[var(--bg-elevated)]/80 p-5 shadow-sm backdrop-blur-sm transition-all duration-300 hover:border-[var(--primary)]/60 sm:p-6`}
       >
         <div className='flex flex-col gap-2 sm:flex-row sm:flex-wrap sm:items-center sm:gap-3'>
           <h3 className='text-lg font-semibold text-[var(--text)] sm:text-xl'>
@@ -157,15 +157,15 @@ export default function Experience() {
   return (
     <section
       id='experience'
-      className='w-full border-t py-16 sm:py-20 md:py-24'
+      className='scroll-snap-section flex min-h-[100dvh] w-full flex-col border-t py-16 sm:py-20 md:py-24'
       style={{ borderColor: 'var(--border)', backgroundColor: 'var(--bg)' }}
       aria-labelledby='experience-heading'
     >
-      <div className='mx-auto max-w-3xl px-6 sm:px-10 lg:px-12'>
+      <div className='mx-auto flex max-w-3xl flex-1 flex-col justify-center px-6 sm:px-10 lg:px-12'>
         <h2
           id='experience-heading'
-          className='font-serif text-2xl font-bold tracking-tight text-[var(--text)] sm:text-3xl'
-          style={{ fontFamily: 'var(--font-serif)' }}
+          className='text-2xl font-bold tracking-tight text-[var(--text)] sm:text-3xl'
+          style={{ fontFamily: 'var(--font-display)' }}
         >
           Experience
         </h2>

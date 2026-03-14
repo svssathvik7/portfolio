@@ -106,42 +106,42 @@ export default function Navbar({ onThemeToggle, themeMode = 'light' }: NavbarPro
     }
   }, [mobileMenuOpen])
 
-  const ThemeToggle = () =>
-    onThemeToggle ? (
-      <button
-        onClick={onThemeToggle}
-        className="group flex h-9 w-9 shrink-0 items-center justify-center rounded-full border text-[var(--text-muted)] transition-all hover:border-[var(--primary)] hover:text-[var(--text)] focus:outline-none focus:ring-2 focus:ring-[var(--ring)] sm:h-10 sm:w-10"
-        style={{ borderColor: 'var(--border)' }}
-        aria-label={themeMode === 'light' ? 'Switch to dark mode' : 'Switch to light mode'}
+  const themeToggleButton = onThemeToggle ? (
+    <button
+      onClick={onThemeToggle}
+      className="group flex h-9 w-9 shrink-0 items-center justify-center rounded-full border text-[var(--text-muted)] transition-all hover:border-[var(--primary)] hover:text-[var(--text)] focus:outline-none focus:ring-2 focus:ring-[var(--ring)] sm:h-10 sm:w-10"
+      style={{ borderColor: 'var(--border)' }}
+      aria-label={themeMode === 'light' ? 'Switch to dark mode' : 'Switch to light mode'}
+    >
+      <svg
+        className="h-4 w-4 transition-transform group-hover:rotate-12 sm:h-5 sm:w-5"
+        fill="none"
+        stroke="currentColor"
+        viewBox="0 0 24 24"
       >
-        <svg
-          className="h-4 w-4 transition-transform group-hover:rotate-12 sm:h-5 sm:w-5"
-          fill="none"
-          stroke="currentColor"
-          viewBox="0 0 24 24"
-        >
-          {themeMode === 'light' ? (
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth={2}
-              d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"
-            />
-          ) : (
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth={2}
-              d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"
-            />
-          )}
-        </svg>
-      </button>
-    ) : null
+        {themeMode === 'light' ? (
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth={2}
+            d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"
+          />
+        ) : (
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth={2}
+            d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"
+          />
+        )}
+      </svg>
+    </button>
+  ) : null
 
   return (
     <nav
-      className="sticky top-0 z-50 w-full border-b border-[var(--border)] bg-(--bg-elevated)/90 backdrop-blur-md"
+      className="sticky top-0 z-50 w-full border-b border-[var(--border)] bg-[var(--bg-elevated)]/80 backdrop-blur-md"
+      style={{ fontFamily: 'var(--font-display)' }}
       aria-label="Main navigation"
     >
       <div className="mx-auto flex max-w-3xl items-center justify-between px-4 py-3 sm:px-10 sm:py-4 lg:px-12">
@@ -191,7 +191,7 @@ export default function Navbar({ onThemeToggle, themeMode = 'light' }: NavbarPro
             </svg>
           </button>
 
-          <ThemeToggle />
+          {themeToggleButton}
         </div>
       </div>
 

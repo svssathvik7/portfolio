@@ -57,11 +57,11 @@ function ContactCard({
       href={item.href}
       {...linkProps}
       aria-label={item.label}
-      className={`group block min-w-0 rounded-2xl border border-[var(--border)] p-5 transition-all duration-300 hover:-translate-y-1 hover:border-[var(--primary)] hover:shadow-[0_0_24px_color-mix(in_srgb,var(--primary)_15%,transparent)] focus:outline-none focus:ring-2 focus:ring-[var(--ring)] focus:ring-offset-2 sm:p-6 ${
+      className={`group block min-w-0 rounded-2xl border border-[var(--border)] p-5 backdrop-blur-sm transition-all duration-300 hover:-translate-y-1 hover:border-[var(--primary)] hover:shadow-[0_0_32px_color-mix(in_srgb,var(--primary)_18%,transparent)] focus:outline-none focus:ring-2 focus:ring-[var(--ring)] focus:ring-offset-2 sm:p-6 ${
         isVisible ? 'translate-y-0 opacity-100' : 'translate-y-4 opacity-0'
       }`}
       style={{
-        backgroundColor: 'var(--bg-elevated)',
+        backgroundColor: 'color-mix(in srgb, var(--bg-elevated) 90%, transparent)',
         transitionDelay: isVisible ? `${delay}ms` : '0ms',
       }}
     >
@@ -129,15 +129,15 @@ export default function Connect() {
     <section
       id='connect'
       ref={sectionRef}
-      className='w-full border-t py-16 sm:py-20 md:py-24'
+      className='scroll-snap-section flex min-h-[100dvh] w-full flex-col border-t py-16 sm:py-20 md:py-24'
       style={{ borderColor: 'var(--border)', backgroundColor: 'var(--bg)' }}
       aria-labelledby='connect-heading'
     >
-      <div className='mx-auto max-w-3xl px-6 sm:px-10 lg:px-12'>
+      <div className='mx-auto flex max-w-3xl flex-1 flex-col justify-center px-6 sm:px-10 lg:px-12'>
         <h2
           id='connect-heading'
-          className='font-serif text-2xl font-bold tracking-tight sm:text-3xl'
-          style={{ fontFamily: 'var(--font-serif)', color: 'var(--text)' }}
+          className='text-2xl font-bold tracking-tight sm:text-3xl'
+          style={{ fontFamily: 'var(--font-display)', color: 'var(--text)' }}
         >
           Let&apos;s Connect
         </h2>
