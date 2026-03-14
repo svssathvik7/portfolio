@@ -10,11 +10,28 @@ interface Project {
 
 const PROJECTS: Project[] = [
   {
+    id: 'turbine-rpc-proxy',
+    title: 'Turbine RPC Proxy',
+    href: 'https://crates.io/crates/turbine-rpc-proxy',
+    description:
+      'Multi-chain RPC proxy with intelligent endpoint rotation, health checks, caching, and per-endpoint authentication (Basic Auth, Bearer, custom headers). Supports any JSON-RPC chain — EVM, Solana, Bitcoin, Starknet, and more. Built in Rust for performance and reliability.',
+    tags: [
+      'Rust',
+      'RPC',
+      'Multi-Chain',
+      'Load Balancing',
+      'Blockchain',
+      'Caching',
+      'System design',
+      'Infrastructure',
+    ],
+  },
+  {
     id: 'garden-sdk',
     title: 'Garden SDK',
     href: 'https://www.npmjs.com/search?q=%40gardenfi%2Fcore',
     description:
-      "TypeScript SDK wrapping the Garden backend for cross-chain atomic swaps. Led development of complete Bitcoin HTLC support, Bitcoin wallet connections (OKX, Unisat, Xverse), Sui integration, Litecoin support, and Spark (Bitcoin L2) support. Published as @gardenfi/core, @gardenfi/wallet-connectors, and related packages on npm.",
+      'TypeScript SDK wrapping the Garden backend for cross-chain atomic swaps. Led development of complete Bitcoin HTLC support, Bitcoin wallet connections (OKX, Unisat, Xverse), Sui integration, Litecoin support, and Spark (Bitcoin L2) support. Published as @gardenfi/core, @gardenfi/wallet-connectors, and related packages on npm.',
     tags: [
       'TypeScript',
       'Bitcoin',
@@ -38,23 +55,6 @@ const PROJECTS: Project[] = [
       'Staking and Rewards',
       'Deterministic Systems',
       'Backend Infrastructure',
-    ],
-  },
-  {
-    id: 'turbine-rpc-proxy',
-    title: 'Turbine RPC Proxy',
-    href: 'https://crates.io/crates/turbine-rpc-proxy',
-    description:
-      'Multi-chain RPC proxy with intelligent endpoint rotation, health checks, caching, and per-endpoint authentication (Basic Auth, Bearer, custom headers). Supports any JSON-RPC chain — EVM, Solana, Bitcoin, Starknet, and more. Built in Rust for performance and reliability.',
-    tags: [
-      'Rust',
-      'RPC',
-      'Multi-Chain',
-      'Load Balancing',
-      'Health Checks',
-      'Caching',
-      'Authentication',
-      'Infrastructure',
     ],
   },
 ];
