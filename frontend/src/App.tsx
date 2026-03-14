@@ -6,6 +6,12 @@ import GoToTop from './components/GoToTop';
 import Navbar from './components/Navbar';
 import { applyTheme, getInitialTheme, type ThemeMode } from './theme';
 
+const PILLARS = [
+  { label: 'Systems', desc: 'I build them.' },
+  { label: 'Songs', desc: 'I sing them.' },
+  { label: 'Checkmates', desc: 'I play them.' },
+] as const;
+
 function App() {
   const [mode, setMode] = useState<ThemeMode>(() => getInitialTheme());
 
@@ -20,16 +26,28 @@ function App() {
   };
 
   return (
-    <main className='relative min-h-screen w-full overflow-hidden bg-[var(--bg)] text-[var(--text)] transition-colors duration-300'>
-      {/* Subtle background pattern */}
+    <main
+      className='scroll-snap-container relative w-full bg-[var(--bg)] text-[var(--text)] transition-colors duration-300'
+      style={{ fontFamily: 'var(--font-sans)' }}
+    >
+      {/* Gradient mesh background */}
       <div
-        className='pointer-events-none absolute inset-0 opacity-[0.03] dark:opacity-[0.05]'
+        className='pointer-events-none fixed inset-0 opacity-[0.4] dark:opacity-[0.5]'
+        aria-hidden
         style={{
-          backgroundImage: `
-            linear-gradient(var(--text) 1px, transparent 1px),
-            linear-gradient(90deg, var(--text) 1px, transparent 1px)
+          background: `
+            radial-gradient(ellipse 80% 50% at 50% -20%, color-mix(in srgb, var(--primary) 15%, transparent), transparent),
+            radial-gradient(ellipse 60% 40% at 100% 50%, color-mix(in srgb, var(--primary) 8%, transparent), transparent),
+            radial-gradient(ellipse 60% 40% at 0% 80%, color-mix(in srgb, var(--primary) 10%, transparent), transparent)
           `,
-          backgroundSize: '48px 48px',
+        }}
+      />
+      {/* Subtle noise texture overlay */}
+      <div
+        className='pointer-events-none fixed inset-0 opacity-[0.02] dark:opacity-[0.03]'
+        aria-hidden
+        style={{
+          backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E")`,
         }}
       />
 
@@ -37,43 +55,39 @@ function App() {
 
       <section
         id='hero'
-        className='relative mx-auto flex min-h-screen w-full max-w-3xl flex-col px-6 py-12 sm:px-10 sm:py-16 lg:px-12 lg:py-20'
+        className='scroll-snap-section relative flex min-h-[100dvh] w-full flex-col'
+        aria-label='Introduction'
       >
-        <div className='my-auto flex flex-col justify-center'>
+        <div className='relative mx-auto flex w-full max-w-4xl flex-1 flex-col justify-center px-6 py-16 sm:px-10 sm:py-20 lg:px-12 lg:py-24'>
           {/* Name */}
           <h1
-            className='font-serif text-3xl font-semibold tracking-tight text-[var(--text)] sm:text-4xl'
-            style={{ fontFamily: 'var(--font-serif)' }}
+            className='text-4xl font-semibold tracking-tight text-[var(--text)] sm:text-5xl'
+            style={{ fontFamily: 'var(--font-display)' }}
           >
             Sathvik
           </h1>
 
-          {/* Tagline — the three pillars */}
-          <p
-            className='mt-3 font-serif text-4xl font-bold leading-[1.15] tracking-tight text-[var(--text)] sm:text-5xl md:text-6xl'
-            style={{ fontFamily: 'var(--font-serif)' }}
-          >
-            Systems. Songs. Checkmates.
-          </p>
-
-          {/* Decorative divider */}
-          <div className='mt-8 flex items-center gap-3'>
-            <span
-              className='h-px flex-1 bg-gradient-to-r from-transparent via-[var(--primary)] to-transparent opacity-60'
-              aria-hidden
-            />
-            <span className='text-[var(--text-muted)]' aria-hidden>
-              •
-            </span>
-            <span
-              className='h-px flex-1 bg-gradient-to-r from-transparent via-[var(--primary)] to-transparent opacity-60'
-              aria-hidden
-            />
+          {/* Three pillars — visual blocks */}
+          <div className='mt-8 grid gap-4 sm:grid-cols-3 sm:gap-6'>
+            {PILLARS.map(({ label, desc }) => (
+              <div
+                key={label}
+                className='group rounded-xl border border-[var(--border)] bg-[var(--bg-elevated)]/80 p-4 backdrop-blur-sm transition-all duration-300 hover:border-[var(--primary)] hover:shadow-[0_0_24px_color-mix(in_srgb,var(--primary)_12%,transparent)] sm:p-5'
+              >
+                <span
+                  className='block text-lg font-semibold text-[var(--primary)] sm:text-xl'
+                  style={{ fontFamily: 'var(--font-display)' }}
+                >
+                  {label}
+                </span>
+                <span className='mt-1 block text-sm text-[var(--text-muted)]'>{desc}</span>
+              </div>
+            ))}
           </div>
 
-          {/* Hero heading */}
+          {/* Hero copy */}
           <p
-            className='mt-8 max-w-2xl text-lg leading-relaxed text-[var(--text-muted)] sm:text-xl md:text-2xl'
+            className='mt-10 max-w-2xl text-lg leading-relaxed text-[var(--text-muted)] sm:text-xl md:text-2xl'
             style={{ fontFamily: 'var(--font-sans)' }}
           >
             I build systems that don&apos;t break,
@@ -83,13 +97,11 @@ function App() {
             and always have one more move left.
           </p>
 
-          {/* Caption with role and interests */}
+          {/* Role & interests */}
           <p className='mt-6 max-w-xl text-base leading-relaxed text-[var(--text-muted)] sm:text-lg'>
             Backend Engineer at{' '}
-            <span className='font-medium text-[var(--primary)]'>
-              Garden Finance
-            </span>
-            . Rust, TypeScript, multi-chain infrastructure.
+            <span className='font-medium text-[var(--primary)]'>Garden Finance</span>. Rust,
+            TypeScript, multi-chain infrastructure.
             <span className='mt-2 block'>
               Singer. Chess enthusiast. Occasionally funny.
             </span>
@@ -100,7 +112,7 @@ function App() {
             {['Rust', 'TypeScript', 'Bitcoin', 'Ethereum', 'Solana', 'Sui'].map((tag) => (
               <span
                 key={tag}
-                className='rounded-full border border-[var(--border)] bg-[var(--bg-elevated)] px-4 py-1.5 font-mono text-xs font-medium text-[var(--text-muted)] sm:text-sm'
+                className='rounded-full border border-[var(--border)] bg-[var(--bg-elevated)]/80 px-4 py-1.5 font-mono text-xs font-medium text-[var(--text-muted)] backdrop-blur-sm transition-colors hover:border-[var(--primary)] hover:text-[var(--text)] sm:text-sm'
                 style={{ fontFamily: 'var(--font-mono)' }}
               >
                 {tag}
@@ -109,7 +121,30 @@ function App() {
           </div>
         </div>
 
-        <footer className='mt-auto pt-12' />
+        {/* Scroll cue */}
+        <div className='flex justify-center pb-8'>
+          <a
+            href='#experience'
+            className='flex flex-col items-center gap-2 text-[var(--text-muted)] transition-colors hover:text-[var(--primary)]'
+            aria-label='Scroll to Experience'
+          >
+            <span className='text-xs font-medium uppercase tracking-widest'>Explore</span>
+            <svg
+              className='h-6 w-6 animate-bounce motion-reduce:animate-none'
+              fill='none'
+              stroke='currentColor'
+              viewBox='0 0 24 24'
+              aria-hidden
+            >
+              <path
+                strokeLinecap='round'
+                strokeLinejoin='round'
+                strokeWidth={2}
+                d='M19 14l-7 7m0 0l-7-7m7 7V3'
+              />
+            </svg>
+          </a>
+        </div>
       </section>
 
       <Experience />
