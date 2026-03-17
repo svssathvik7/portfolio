@@ -39,9 +39,9 @@ function App() {
 
       <section
         id='hero'
-        className='relative mx-auto flex min-h-screen w-full max-w-3xl flex-col px-6 py-12 sm:px-10 sm:py-16 lg:px-12 lg:py-20'
+        className='relative mx-auto flex w-full max-w-3xl flex-col px-6 pt-28 pb-16 sm:px-10 sm:pt-32 sm:pb-20 lg:px-12 lg:pt-36 lg:pb-24'
       >
-        <div className='my-auto flex flex-col justify-center'>
+        <div className='flex flex-col justify-center'>
           {/* Name */}
           <h1
             className='font-serif text-3xl font-semibold tracking-tight text-[var(--text)] sm:text-4xl'
@@ -111,7 +111,6 @@ function App() {
           </div>
         </div>
 
-        <footer className='mt-auto pt-12' />
       </section>
 
       <Experience />

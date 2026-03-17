@@ -51,7 +51,7 @@ export default function Experience() {
     <section
       id='experience'
       ref={sectionRef}
-      className='w-full border-t py-16 sm:py-20 md:py-24'
+      className='w-full border-t py-20 sm:py-28 md:py-32'
       style={{ borderColor: 'var(--border)', backgroundColor: 'var(--bg)' }}
       aria-labelledby='experience-heading'
     >
