@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import ClickSpark from './components/ClickSpark';
 import Connect from './components/Connect';
 import Experience from './components/Experience';
 import Projects from './components/Projects';
@@ -20,6 +21,7 @@ function App() {
   };
 
   return (
+    <ClickSpark sparkColor='var(--primary)' sparkSize={12} sparkRadius={20} sparkCount={10} duration={500}>
     <main className='relative min-h-screen w-full overflow-hidden bg-[var(--bg)] text-[var(--text)] transition-colors duration-300'>
       {/* Subtle background pattern */}
       <div
@@ -117,6 +119,7 @@ function App() {
       <Connect />
       <GoToTop />
     </main>
+    </ClickSpark>
   );
 }
 
