@@ -3,8 +3,10 @@ import { gsap } from 'gsap';
 
 export interface BounceCard {
   title: string;
+  description: string;
   href?: string;
   tags: string[];
+  accent: string; // gradient string for the top strip
 }
 
 interface BounceCardsProps {
@@ -127,19 +129,70 @@ export default function BounceCards({
       style={{ width: containerWidth, height: containerHeight }}
     >
       {cards.map((card, idx) => {
-        const inner = (
-          <>
-            <h3
-              className='text-base font-semibold sm:text-lg'
-              style={{ fontFamily: 'var(--font-display)', color: 'var(--text)' }}
-            >
-              {card.title}
-            </h3>
-            <div className='mt-3 flex flex-wrap gap-1.5'>
+        const Wrapper = card.href ? 'a' : 'div';
+        const linkProps = card.href
+          ? { href: card.href, target: '_blank' as const, rel: 'noopener noreferrer' }
+          : {};
+
+        return (
+          <Wrapper
+            key={idx}
+            {...linkProps}
+            aria-label={card.href ? `${card.title} (opens in new tab)` : undefined}
+            className={`bounce-card bounce-card-${idx} group/card absolute flex w-[220px] cursor-pointer flex-col overflow-hidden rounded-2xl border border-[var(--border)] shadow-[0_4px_20px_rgba(0,0,0,0.15)] transition-[height,border-color] duration-300 ease-out hover:border-[var(--primary)] hover:shadow-[0_8px_32px_rgba(0,0,0,0.25)]`}
+            style={{
+              height: 120,
+              backgroundColor: 'var(--bg-elevated)',
+              transform: transformStyles[idx] ?? 'none',
+            }}
+            onMouseEnter={(e) => {
+              (e.currentTarget as HTMLElement).style.height = '260px';
+              pushSiblings(idx);
+            }}
+            onMouseLeave={(e) => {
+              (e.currentTarget as HTMLElement).style.height = '120px';
+              resetSiblings();
+            }}
+          >
+            {/* Accent gradient strip */}
+            <div
+              className='h-1.5 w-full shrink-0'
+              style={{ background: card.accent }}
+            />
+
+            {/* Default visible: title + arrow */}
+            <div className='flex items-start justify-between gap-2 px-4 pt-3'>
+              <h3
+                className='text-sm font-semibold leading-snug'
+                style={{ fontFamily: 'var(--font-display)', color: 'var(--text)' }}
+              >
+                {card.title}
+              </h3>
+              {card.href && (
+                <svg
+                  className='mt-0.5 h-3.5 w-3.5 shrink-0 opacity-40 transition-opacity duration-200 group-hover/card:opacity-100'
+                  style={{ color: 'var(--primary)' }}
+                  fill='none'
+                  stroke='currentColor'
+                  viewBox='0 0 24 24'
+                  aria-hidden
+                >
+                  <path
+                    strokeLinecap='round'
+                    strokeLinejoin='round'
+                    strokeWidth={2}
+                    d='M7 17L17 7M17 7H7M17 7v10'
+                  />
+                </svg>
+              )}
+            </div>
+
+            {/* Tags — always visible */}
+            <div className='mt-2 flex flex-wrap gap-1 px-4'>
               {card.tags.slice(0, 3).map((tag) => (
                 <span
                   key={tag}
-                  className='rounded-full border px-2 py-0.5 font-mono text-[10px]'
+                  className='rounded-full border px-1.5 py-0.5 text-[9px] font-medium'
                   style={{
                     borderColor: 'var(--border)',
                     color: 'var(--text-muted)',
@@ -150,41 +203,38 @@ export default function BounceCards({
                 </span>
               ))}
             </div>
-          </>
-        );
 
-        const cardClass = `bounce-card bounce-card-${idx} absolute flex flex-col justify-end rounded-2xl border border-[var(--border)] p-4 shadow-[0_4px_16px_rgba(0,0,0,0.12)] transition-colors duration-300 hover:border-[var(--primary)] cursor-pointer`;
-        const cardStyle = {
-          width: 200,
-          height: 140,
-          backgroundColor: 'var(--bg-elevated)',
-          transform: transformStyles[idx] ?? 'none',
-        };
-
-        return card.href ? (
-          <a
-            key={idx}
-            href={card.href}
-            target='_blank'
-            rel='noopener noreferrer'
-            aria-label={`${card.title} (opens in new tab)`}
-            className={cardClass}
-            style={cardStyle}
-            onMouseEnter={() => pushSiblings(idx)}
-            onMouseLeave={resetSiblings}
-          >
-            {inner}
-          </a>
-        ) : (
-          <div
-            key={idx}
-            className={cardClass}
-            style={cardStyle}
-            onMouseEnter={() => pushSiblings(idx)}
-            onMouseLeave={resetSiblings}
-          >
-            {inner}
-          </div>
+            {/* Expanded content: description + remaining tags */}
+            <div className='mt-auto flex flex-col gap-2 px-4 pb-4 pt-3 opacity-0 transition-opacity duration-300 group-hover/card:opacity-100'>
+              <div
+                className='h-px w-full'
+                style={{ backgroundColor: 'var(--border)' }}
+              />
+              <p
+                className='text-[11px] leading-relaxed'
+                style={{ color: 'var(--text-muted)' }}
+              >
+                {card.description}
+              </p>
+              {card.tags.length > 3 && (
+                <div className='flex flex-wrap gap-1'>
+                  {card.tags.slice(3).map((tag) => (
+                    <span
+                      key={tag}
+                      className='rounded-full border px-1.5 py-0.5 text-[9px] font-medium'
+                      style={{
+                        borderColor: 'var(--border)',
+                        color: 'var(--text-muted)',
+                        fontFamily: 'var(--font-mono)',
+                      }}
+                    >
+                      {tag}
+                    </span>
+                  ))}
+                </div>
+              )}
+            </div>
+          </Wrapper>
         );
       })}
     </div>
