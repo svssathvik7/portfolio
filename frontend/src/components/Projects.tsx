@@ -29,9 +29,9 @@ const PROJECTS: BounceCard[] = [
   {
     title: 'Raga Vault',
     description:
-      'Full-stack web app for exploring and cataloging Indian classical music ragas. React frontend with Hono backend, containerized with Docker.',
+      'Platform for singers to store songs, stage time content, and song metadata in one place. Advanced filtering to find songs matching complex criteria.',
     href: 'https://singers-frontend.pages.dev/',
-    tags: ['React', 'Hono', 'TypeScript', 'Docker', 'Music'],
+    tags: ['React', 'Hono', 'TypeScript', 'Docker', 'Full-Stack'],
     accent: 'linear-gradient(135deg, #ec4899, #db2777)',
   },
 ];
