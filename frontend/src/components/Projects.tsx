@@ -36,6 +36,58 @@ const TRANSFORM_STYLES = [
   'rotate(2deg) translate(170px)',
 ];
 
+function MobileProjectCard({ project }: { project: BounceCard }) {
+  const inner = (
+    <>
+      <h3
+        className='text-base font-semibold'
+        style={{ fontFamily: 'var(--font-display)', color: 'var(--text)' }}
+      >
+        {project.title}
+      </h3>
+      <div className='mt-2 flex flex-wrap gap-1.5'>
+        {project.tags.map((tag) => (
+          <span
+            key={tag}
+            className='rounded-full border px-2 py-0.5 font-mono text-[10px]'
+            style={{
+              borderColor: 'var(--border)',
+              color: 'var(--text-muted)',
+              fontFamily: 'var(--font-mono)',
+            }}
+          >
+            {tag}
+          </span>
+        ))}
+      </div>
+    </>
+  );
+
+  if (project.href) {
+    return (
+      <a
+        href={project.href}
+        target='_blank'
+        rel='noopener noreferrer'
+        aria-label={`${project.title} (opens in new tab)`}
+        className='block rounded-xl border border-[var(--border)] p-4 transition-colors duration-200 active:border-[var(--primary)]'
+        style={{ backgroundColor: 'var(--bg-elevated)' }}
+      >
+        {inner}
+      </a>
+    );
+  }
+
+  return (
+    <div
+      className='rounded-xl border border-[var(--border)] p-4'
+      style={{ backgroundColor: 'var(--bg-elevated)' }}
+    >
+      {inner}
+    </div>
+  );
+}
+
 export default function Projects() {
   return (
     <section
@@ -59,7 +111,8 @@ export default function Projects() {
           Selected systems and infrastructure work.
         </p>
 
-        <div className='mt-12 flex justify-center'>
+        {/* Desktop: BounceCards with hover */}
+        <div className='mt-12 hidden justify-center md:flex'>
           <BounceCards
             cards={PROJECTS}
             containerWidth={600}
@@ -69,6 +122,13 @@ export default function Projects() {
             animationDelay={0.5}
             animationStagger={0.08}
           />
+        </div>
+
+        {/* Mobile: stacked flex cards */}
+        <div className='mt-10 flex flex-col gap-3 md:hidden'>
+          {PROJECTS.map((project) => (
+            <MobileProjectCard key={project.title} project={project} />
+          ))}
         </div>
 
         <p
