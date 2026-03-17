@@ -139,7 +139,7 @@ export default function BounceCards({
             key={idx}
             {...linkProps}
             aria-label={card.href ? `${card.title} (opens in new tab)` : undefined}
-            className={`bounce-card bounce-card-${idx} group/card absolute w-[220px] cursor-pointer overflow-hidden rounded-2xl border border-[var(--border)] shadow-[0_4px_20px_rgba(0,0,0,0.15)] transition-[border-color,box-shadow] duration-300 hover:shadow-[0_8px_32px_rgba(0,0,0,0.25)]`}
+            className={`bounce-card bounce-card-${idx} group/card absolute w-[260px] cursor-pointer overflow-hidden rounded-2xl border border-[var(--border)] shadow-[0_4px_20px_rgba(0,0,0,0.15)] transition-[border-color,box-shadow] duration-300 hover:shadow-[0_8px_32px_rgba(0,0,0,0.25)]`}
             style={{
               backgroundColor: 'var(--bg-elevated)',
               transform: transformStyles[idx] ?? 'none',
@@ -156,7 +156,7 @@ export default function BounceCards({
             {/* Title + arrow */}
             <div className='flex items-start justify-between gap-2 px-4 pt-3'>
               <h3
-                className='text-sm font-semibold leading-snug'
+                className='text-base font-semibold leading-snug'
                 style={{ fontFamily: 'var(--font-display)', color: 'var(--text)' }}
               >
                 {card.title}
@@ -185,7 +185,7 @@ export default function BounceCards({
               {card.tags.slice(0, 3).map((tag) => (
                 <span
                   key={tag}
-                  className='rounded-full border px-1.5 py-0.5 text-[9px] font-medium'
+                  className='rounded-full border px-2 py-0.5 text-[10px] font-medium'
                   style={{
                     borderColor: 'var(--border)',
                     color: 'var(--text-muted)',
@@ -212,7 +212,7 @@ export default function BounceCards({
                       {card.tags.slice(3).map((tag) => (
                         <span
                           key={tag}
-                          className='rounded-full border px-1.5 py-0.5 text-[9px] font-medium'
+                          className='rounded-full border px-2 py-0.5 text-[10px] font-medium'
                           style={{
                             borderColor: 'var(--border)',
                             color: 'var(--text-muted)',

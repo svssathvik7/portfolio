@@ -37,10 +37,10 @@ const PROJECTS: BounceCard[] = [
 ];
 
 const TRANSFORM_STYLES = [
-  'rotate(8deg) translate(-130px)',
-  'rotate(3deg) translate(-44px)',
-  'rotate(-3deg) translate(44px)',
-  'rotate(-8deg) translate(130px)',
+  'rotate(8deg) translate(-160px)',
+  'rotate(3deg) translate(-54px)',
+  'rotate(-3deg) translate(54px)',
+  'rotate(-8deg) translate(160px)',
 ];
 
 function MobileProjectCard({ project }: { project: BounceCard }) {
@@ -185,8 +185,8 @@ export default function Projects() {
         <div className='mt-12 hidden justify-center md:flex'>
           <BounceCards
             cards={PROJECTS}
-            containerWidth={600}
-            containerHeight={350}
+            containerWidth={720}
+            containerHeight={400}
             transformStyles={TRANSFORM_STYLES}
             enableHover={true}
             animationDelay={0.5}
