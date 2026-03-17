@@ -113,26 +113,10 @@ function MobileProjectCard({ project }: { project: BounceCard }) {
           </div>
         </div>
 
-        <div className='mt-2 flex flex-wrap gap-1.5'>
-          {project.tags.slice(0, 3).map((tag) => (
-            <span
-              key={tag}
-              className='rounded-full border px-2 py-0.5 text-[10px] font-medium'
-              style={{
-                borderColor: 'var(--border)',
-                color: 'var(--text-muted)',
-                fontFamily: 'var(--font-mono)',
-              }}
-            >
-              {tag}
-            </span>
-          ))}
-        </div>
-
-        {/* Expandable section */}
+        {/* Expandable section — description + all tags together */}
         <div
           className='overflow-hidden transition-all duration-300 ease-out'
-          style={{ maxHeight: expanded ? '200px' : '0px', opacity: expanded ? 1 : 0 }}
+          style={{ maxHeight: expanded ? '250px' : '0px', opacity: expanded ? 1 : 0 }}
         >
           <div
             className='mt-3 h-px w-full'
@@ -144,23 +128,21 @@ function MobileProjectCard({ project }: { project: BounceCard }) {
           >
             {project.description}
           </p>
-          {project.tags.length > 3 && (
-            <div className='mt-2 flex flex-wrap gap-1.5'>
-              {project.tags.slice(3).map((tag) => (
-                <span
-                  key={tag}
-                  className='rounded-full border px-2 py-0.5 text-[10px] font-medium'
-                  style={{
-                    borderColor: 'var(--border)',
-                    color: 'var(--text-muted)',
-                    fontFamily: 'var(--font-mono)',
-                  }}
-                >
-                  {tag}
-                </span>
-              ))}
-            </div>
-          )}
+          <div className='mt-2 flex flex-wrap gap-1.5'>
+            {project.tags.map((tag) => (
+              <span
+                key={tag}
+                className='rounded-full border px-2 py-0.5 text-[10px] font-medium'
+                style={{
+                  borderColor: 'var(--border)',
+                  color: 'var(--text-muted)',
+                  fontFamily: 'var(--font-mono)',
+                }}
+              >
+                {tag}
+              </span>
+            ))}
+          </div>
         </div>
       </div>
     </>
