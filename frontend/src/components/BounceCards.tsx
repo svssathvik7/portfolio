@@ -139,7 +139,7 @@ export default function BounceCards({
             key={idx}
             {...linkProps}
             aria-label={card.href ? `${card.title} (opens in new tab)` : undefined}
-            className={`bounce-card bounce-card-${idx} group/card absolute w-[220px] cursor-pointer overflow-hidden rounded-2xl border border-[var(--border)] shadow-[0_4px_20px_rgba(0,0,0,0.15)] transition-[border-color,box-shadow] duration-300 hover:border-[var(--primary)] hover:shadow-[0_8px_32px_rgba(0,0,0,0.25)]`}
+            className={`bounce-card bounce-card-${idx} group/card absolute w-[220px] cursor-pointer overflow-hidden rounded-2xl border border-[var(--border)] shadow-[0_4px_20px_rgba(0,0,0,0.15)] transition-[border-color,box-shadow] duration-300 hover:shadow-[0_8px_32px_rgba(0,0,0,0.25)]`}
             style={{
               backgroundColor: 'var(--bg-elevated)',
               transform: transformStyles[idx] ?? 'none',
