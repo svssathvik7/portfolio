@@ -86,9 +86,9 @@ function App() {
           {/* Caption with role and interests */}
           <p className='mt-6 max-w-xl text-base leading-relaxed text-[var(--text-muted)] sm:text-lg'>
             Backend Engineer at{' '}
-            <span className='font-medium text-[var(--primary)]'>
+            <a href='https://garden.finance/' target='_blank' rel='noopener noreferrer' className='font-medium text-[var(--primary)] hover:underline'>
               Garden Finance
-            </span>
+            </a>
             . Rust, TypeScript, multi-chain infrastructure.
             <span className='mt-2 block'>
               Singer. Chess enthusiast. Occasionally funny.
