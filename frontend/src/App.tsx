@@ -21,7 +21,7 @@ function App() {
   };
 
   return (
-    <ClickSpark sparkColor='var(--primary)' sparkSize={12} sparkRadius={20} sparkCount={10} duration={500}>
+    <ClickSpark sparkColor={mode === 'dark' ? '#ffffff' : '#000000'} sparkSize={12} sparkRadius={20} sparkCount={10} duration={500}>
     <main className='relative min-h-screen w-full overflow-hidden bg-[var(--bg)] text-[var(--text)] transition-colors duration-300'>
       {/* Subtle background pattern */}
       <div
