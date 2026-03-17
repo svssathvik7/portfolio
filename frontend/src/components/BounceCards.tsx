@@ -135,101 +135,99 @@ export default function BounceCards({
           : {};
 
         return (
-          <div
+          <Wrapper
             key={idx}
-            className={`bounce-card bounce-card-${idx} group/card absolute`}
-            style={{ transform: transformStyles[idx] ?? 'none' }}
+            {...linkProps}
+            aria-label={card.href ? `${card.title} (opens in new tab)` : undefined}
+            className={`bounce-card bounce-card-${idx} group/card absolute w-[220px] cursor-pointer overflow-hidden rounded-2xl border border-[var(--border)] shadow-[0_4px_20px_rgba(0,0,0,0.15)] transition-[border-color,box-shadow] duration-300 hover:border-[var(--primary)] hover:shadow-[0_8px_32px_rgba(0,0,0,0.25)]`}
+            style={{
+              backgroundColor: 'var(--bg-elevated)',
+              transform: transformStyles[idx] ?? 'none',
+            }}
             onMouseEnter={() => pushSiblings(idx)}
             onMouseLeave={() => resetSiblings()}
           >
-            {/* The card itself — fixed size */}
-            <Wrapper
-              {...linkProps}
-              aria-label={card.href ? `${card.title} (opens in new tab)` : undefined}
-              className='flex h-[120px] w-[220px] cursor-pointer flex-col overflow-hidden rounded-2xl border border-[var(--border)] shadow-[0_4px_20px_rgba(0,0,0,0.15)] transition-[border-color,box-shadow] duration-300 hover:border-[var(--primary)] hover:shadow-[0_8px_32px_rgba(0,0,0,0.25)]'
-              style={{ backgroundColor: 'var(--bg-elevated)' }}
-            >
-              {/* Accent gradient strip */}
-              <div
-                className='h-1.5 w-full shrink-0'
-                style={{ background: card.accent }}
-              />
-
-              {/* Title + arrow */}
-              <div className='flex items-start justify-between gap-2 px-4 pt-3'>
-                <h3
-                  className='text-sm font-semibold leading-snug'
-                  style={{ fontFamily: 'var(--font-display)', color: 'var(--text)' }}
-                >
-                  {card.title}
-                </h3>
-                {card.href && (
-                  <svg
-                    className='mt-0.5 h-3.5 w-3.5 shrink-0 opacity-40 transition-opacity duration-200 group-hover/card:opacity-100'
-                    style={{ color: 'var(--primary)' }}
-                    fill='none'
-                    stroke='currentColor'
-                    viewBox='0 0 24 24'
-                    aria-hidden
-                  >
-                    <path
-                      strokeLinecap='round'
-                      strokeLinejoin='round'
-                      strokeWidth={2}
-                      d='M7 17L17 7M17 7H7M17 7v10'
-                    />
-                  </svg>
-                )}
-              </div>
-
-              {/* Tags */}
-              <div className='mt-2 flex flex-wrap gap-1 px-4'>
-                {card.tags.slice(0, 3).map((tag) => (
-                  <span
-                    key={tag}
-                    className='rounded-full border px-1.5 py-0.5 text-[9px] font-medium'
-                    style={{
-                      borderColor: 'var(--border)',
-                      color: 'var(--text-muted)',
-                      fontFamily: 'var(--font-mono)',
-                    }}
-                  >
-                    {tag}
-                  </span>
-                ))}
-              </div>
-            </Wrapper>
-
-            {/* Floating detail panel — appears below on hover */}
+            {/* Accent gradient strip */}
             <div
-              className='pointer-events-none absolute left-1/2 top-full z-10 mt-2 w-[240px] -translate-x-1/2 scale-95 rounded-xl border border-[var(--border)] p-3 opacity-0 shadow-[0_8px_24px_rgba(0,0,0,0.2)] transition-all duration-200 ease-out group-hover/card:pointer-events-auto group-hover/card:scale-100 group-hover/card:opacity-100'
-              style={{ backgroundColor: 'var(--bg-elevated)' }}
-            >
-              <p
-                className='text-[11px] leading-relaxed'
-                style={{ color: 'var(--text-muted)' }}
+              className='h-1.5 w-full shrink-0'
+              style={{ background: card.accent }}
+            />
+
+            {/* Title + arrow */}
+            <div className='flex items-start justify-between gap-2 px-4 pt-3'>
+              <h3
+                className='text-sm font-semibold leading-snug'
+                style={{ fontFamily: 'var(--font-display)', color: 'var(--text)' }}
               >
-                {card.description}
-              </p>
-              {card.tags.length > 3 && (
-                <div className='mt-2 flex flex-wrap gap-1'>
-                  {card.tags.slice(3).map((tag) => (
-                    <span
-                      key={tag}
-                      className='rounded-full border px-1.5 py-0.5 text-[9px] font-medium'
-                      style={{
-                        borderColor: 'var(--border)',
-                        color: 'var(--text-muted)',
-                        fontFamily: 'var(--font-mono)',
-                      }}
-                    >
-                      {tag}
-                    </span>
-                  ))}
-                </div>
+                {card.title}
+              </h3>
+              {card.href && (
+                <svg
+                  className='mt-0.5 h-3.5 w-3.5 shrink-0 opacity-40 transition-opacity duration-200 group-hover/card:opacity-100'
+                  style={{ color: 'var(--primary)' }}
+                  fill='none'
+                  stroke='currentColor'
+                  viewBox='0 0 24 24'
+                  aria-hidden
+                >
+                  <path
+                    strokeLinecap='round'
+                    strokeLinejoin='round'
+                    strokeWidth={2}
+                    d='M7 17L17 7M17 7H7M17 7v10'
+                  />
+                </svg>
               )}
             </div>
-          </div>
+
+            {/* Tags */}
+            <div className='mt-2 flex flex-wrap gap-1 px-4 pb-3'>
+              {card.tags.slice(0, 3).map((tag) => (
+                <span
+                  key={tag}
+                  className='rounded-full border px-1.5 py-0.5 text-[9px] font-medium'
+                  style={{
+                    borderColor: 'var(--border)',
+                    color: 'var(--text-muted)',
+                    fontFamily: 'var(--font-mono)',
+                  }}
+                >
+                  {tag}
+                </span>
+              ))}
+            </div>
+
+            {/* Expandable details — grid-row transition via CSS */}
+            <div className='card-expand'>
+              <div className='overflow-hidden'>
+                <div className='border-t px-4 pb-3 pt-2' style={{ borderColor: 'var(--border)' }}>
+                  <p
+                    className='text-[11px] leading-relaxed'
+                    style={{ color: 'var(--text-muted)' }}
+                  >
+                    {card.description}
+                  </p>
+                  {card.tags.length > 3 && (
+                    <div className='mt-2 flex flex-wrap gap-1'>
+                      {card.tags.slice(3).map((tag) => (
+                        <span
+                          key={tag}
+                          className='rounded-full border px-1.5 py-0.5 text-[9px] font-medium'
+                          style={{
+                            borderColor: 'var(--border)',
+                            color: 'var(--text-muted)',
+                            fontFamily: 'var(--font-mono)',
+                          }}
+                        >
+                          {tag}
+                        </span>
+                      ))}
+                    </div>
+                  )}
+                </div>
+              </div>
+            </div>
+          </Wrapper>
         );
       })}
     </div>
