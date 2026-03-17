@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import ClickSpark from './components/ClickSpark';
 import Connect from './components/Connect';
 import Experience from './components/Experience';
 import Projects from './components/Projects';
@@ -20,6 +21,7 @@ function App() {
   };
 
   return (
+    <ClickSpark sparkColor={mode === 'dark' ? '#ffffff' : '#000000'} sparkSize={12} sparkRadius={20} sparkCount={10} duration={500}>
     <main className='relative min-h-screen w-full overflow-hidden bg-[var(--bg)] text-[var(--text)] transition-colors duration-300'>
       {/* Subtle background pattern */}
       <div
@@ -86,9 +88,9 @@ function App() {
           {/* Caption with role and interests */}
           <p className='mt-6 max-w-xl text-base leading-relaxed text-[var(--text-muted)] sm:text-lg'>
             Backend Engineer at{' '}
-            <span className='font-medium text-[var(--primary)]'>
+            <a href='https://garden.finance/' target='_blank' rel='noopener noreferrer' className='font-medium text-[var(--primary)] hover:underline'>
               Garden Finance
-            </span>
+            </a>
             . Rust, TypeScript, multi-chain infrastructure.
             <span className='mt-2 block'>
               Singer. Chess enthusiast. Occasionally funny.
@@ -117,6 +119,7 @@ function App() {
       <Connect />
       <GoToTop />
     </main>
+    </ClickSpark>
   );
 }
 

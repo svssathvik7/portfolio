@@ -1,201 +1,167 @@
-import { useEffect, useRef, useState } from 'react';
+import { useState } from 'react';
+import BounceCards, { type BounceCard } from './BounceCards';
 
-interface Project {
-  id: string;
-  title: string;
-  description: string;
-  href?: string;
-  tags: string[];
-}
-
-const PROJECTS: Project[] = [
+const PROJECTS: BounceCard[] = [
   {
-    id: 'turbine-rpc-proxy',
     title: 'Turbine RPC Proxy',
+    description:
+      'Multi-chain RPC proxy with intelligent load balancing, health checks, caching, hedged requests, and per-endpoint auth. Any JSON-RPC chain.',
     href: 'https://crates.io/crates/turbine-rpc-proxy',
-    description:
-      'Multi-chain RPC proxy with intelligent endpoint rotation, health checks, caching, and per-endpoint authentication (Basic Auth, Bearer, custom headers). Supports any JSON-RPC chain — EVM, Solana, Bitcoin, Starknet, and more. Built in Rust for performance and reliability.',
-    tags: [
-      'Rust',
-      'RPC',
-      'Multi-Chain',
-      'Load Balancing',
-      'Blockchain',
-      'Caching',
-      'System design',
-      'Infrastructure',
-    ],
+    tags: ['Rust', 'Multi-Chain', 'Infrastructure', 'Load Balancing', 'Caching'],
+    accent: 'linear-gradient(135deg, #f97316, #ea580c)',
   },
   {
-    id: 'garden-sdk',
     title: 'Garden SDK',
-    href: 'https://www.npmjs.com/search?q=%40gardenfi%2Fcore',
     description:
-      'TypeScript SDK wrapping the Garden backend for cross-chain atomic swaps. Led development of complete Bitcoin HTLC support, Bitcoin wallet connections (OKX, Unisat, Xverse), Sui integration, Litecoin support, and Spark (Bitcoin L2) support. Published as @gardenfi/core, @gardenfi/wallet-connectors, and related packages on npm.',
-    tags: [
-      'TypeScript',
-      'Bitcoin',
-      'HTLC',
-      'Sui',
-      'Litecoin',
-      'Spark',
-      'Wallet Connectors',
-      'Blockchain SDK',
-    ],
+      'TypeScript SDK for cross-chain atomic swaps. Bitcoin HTLC support, multi-wallet connectors, Sui & Spark integration.',
+    href: 'https://www.npmjs.com/search?q=%40gardenfi%2Fcore',
+    tags: ['TypeScript', 'Bitcoin', 'HTLC', 'Sui', 'Wallet Connectors'],
+    accent: 'linear-gradient(135deg, #22c55e, #16a34a)',
   },
   {
-    id: 'garden-staking',
-    title: 'Garden Staking & Distribution',
-    href: 'https://app.garden.finance/stake',
+    title: 'Garden Staking & Distributor',
     description:
-      "Rust-based distribution system powering Garden's reward infrastructure. Handles on-chain reward distribution, staking logic, and precision accounting with deterministic reward calculations. Production-grade backend services built for reliability at scale.",
-    tags: [
-      'Rust',
-      'Blockchain',
-      'Staking and Rewards',
-      'Deterministic Systems',
-      'Backend Infrastructure',
-    ],
+      'Rust-based staking and reward distribution system. On-chain reward calculations with deterministic precision accounting.',
+    href: 'https://app.garden.finance/stake',
+    tags: ['Rust', 'Staking', 'Rewards', 'Deterministic', 'On-chain'],
+    accent: 'linear-gradient(135deg, #8b5cf6, #7c3aed)',
+  },
+  {
+    title: 'Raga Vault',
+    description:
+      'Platform for singers to store songs, stage time content, and song metadata in one place. Advanced filtering to find songs matching complex criteria.',
+    href: 'https://singers-frontend.pages.dev/',
+    tags: ['React', 'Hono', 'TypeScript', 'Docker', 'Full-Stack'],
+    accent: 'linear-gradient(135deg, #ec4899, #db2777)',
   },
 ];
 
-function ProjectCard({
-  project,
-  isVisible,
-  delay,
-}: {
-  project: Project;
-  isVisible: boolean;
-  delay: number;
-}) {
-  const content = (
+const TRANSFORM_STYLES = [
+  'rotate(8deg) translate(-160px)',
+  'rotate(3deg) translate(-54px)',
+  'rotate(-3deg) translate(54px)',
+  'rotate(-8deg) translate(160px)',
+];
+
+function MobileProjectCard({ project }: { project: BounceCard }) {
+  const [expanded, setExpanded] = useState(false);
+
+  const inner = (
     <>
-      <div className='flex items-start justify-between gap-3'>
-        <h3
-          className='min-w-0 flex-1 text-base font-semibold transition-colors duration-300 group-hover:text-[var(--primary)] sm:text-lg'
-          style={{ color: 'var(--text)' }}
+      {/* Accent strip */}
+      <div
+        className='h-1 w-full shrink-0 rounded-t-xl'
+        style={{ background: project.accent }}
+      />
+      <div className='p-4'>
+        <div className='flex items-start justify-between gap-2'>
+          <h3
+            className='text-base font-semibold'
+            style={{ fontFamily: 'var(--font-display)', color: 'var(--text)' }}
+          >
+            {project.title}
+          </h3>
+          <div className='flex items-center gap-2'>
+            {project.href && (
+              <a
+                href={project.href}
+                target='_blank'
+                rel='noopener noreferrer'
+                aria-label={`${project.title} (opens in new tab)`}
+                className='shrink-0'
+                onClick={(e) => e.stopPropagation()}
+              >
+                <svg
+                  className='h-4 w-4'
+                  style={{ color: 'var(--primary)' }}
+                  fill='none'
+                  stroke='currentColor'
+                  viewBox='0 0 24 24'
+                  aria-hidden
+                >
+                  <path
+                    strokeLinecap='round'
+                    strokeLinejoin='round'
+                    strokeWidth={2}
+                    d='M7 17L17 7M17 7H7M17 7v10'
+                  />
+                </svg>
+              </a>
+            )}
+            <button
+              onClick={() => setExpanded(!expanded)}
+              className='shrink-0 transition-transform duration-200'
+              style={{ transform: expanded ? 'rotate(180deg)' : 'rotate(0deg)' }}
+              aria-label={expanded ? 'Collapse' : 'Expand'}
+            >
+              <svg
+                className='h-4 w-4'
+                style={{ color: 'var(--text-muted)' }}
+                fill='none'
+                stroke='currentColor'
+                viewBox='0 0 24 24'
+                aria-hidden
+              >
+                <path
+                  strokeLinecap='round'
+                  strokeLinejoin='round'
+                  strokeWidth={2}
+                  d='M19 9l-7 7-7-7'
+                />
+              </svg>
+            </button>
+          </div>
+        </div>
+
+        {/* Expandable section — description + all tags together */}
+        <div
+          className='overflow-hidden transition-all duration-300 ease-out'
+          style={{ maxHeight: expanded ? '250px' : '0px', opacity: expanded ? 1 : 0 }}
         >
-          {project.title}
-        </h3>
-        {project.href && (
-          <svg
-            className='mt-0.5 h-4 w-4 shrink-0 transition-colors duration-300 group-hover:text-[var(--primary)] sm:h-5 sm:w-5'
+          <div
+            className='mt-3 h-px w-full'
+            style={{ backgroundColor: 'var(--border)' }}
+          />
+          <p
+            className='mt-3 text-xs leading-relaxed'
             style={{ color: 'var(--text-muted)' }}
-            fill='none'
-            stroke='currentColor'
-            viewBox='0 0 24 24'
-            aria-hidden
           >
-            <path
-              strokeLinecap='round'
-              strokeLinejoin='round'
-              strokeWidth={2}
-              d='M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14'
-            />
-          </svg>
-        )}
-      </div>
-      <p
-        className='mt-3 text-sm leading-relaxed'
-        style={{ color: 'var(--text-muted)' }}
-      >
-        {project.description}
-      </p>
-      <div className='mt-4 flex flex-wrap gap-2'>
-        {project.tags.map((tag) => (
-          <span
-            key={tag}
-            className='rounded-full border px-2.5 py-1 font-mono text-xs'
-            style={{
-              borderColor: 'var(--border)',
-              color: 'var(--text-muted)',
-            }}
-          >
-            {tag}
-          </span>
-        ))}
+            {project.description}
+          </p>
+          <div className='mt-2 flex flex-wrap gap-1.5'>
+            {project.tags.map((tag) => (
+              <span
+                key={tag}
+                className='rounded-full border px-2 py-0.5 text-[10px] font-medium'
+                style={{
+                  borderColor: 'var(--border)',
+                  color: 'var(--text-muted)',
+                  fontFamily: 'var(--font-mono)',
+                }}
+              >
+                {tag}
+              </span>
+            ))}
+          </div>
+        </div>
       </div>
     </>
   );
 
-  const cardClassName = `group block min-w-0 rounded-2xl border border-[var(--border)] p-5 transition-all duration-300 hover:-translate-y-1 hover:border-[var(--primary)] hover:shadow-[0_0_24px_color-mix(in_srgb,var(--primary)_15%,transparent)] focus:outline-none focus:ring-2 focus:ring-[var(--ring)] focus:ring-offset-2 sm:p-6 ${
-    isVisible ? 'translate-y-0 opacity-100' : 'translate-y-4 opacity-0'
-  }`;
-  const cardStyle = {
-    backgroundColor: 'var(--bg-elevated)',
-    transitionDelay: isVisible ? `${delay}ms` : '0ms',
-  };
-
-  if (project.href) {
-    return (
-      <a
-        href={project.href}
-        target='_blank'
-        rel='noopener noreferrer'
-        aria-label={`${project.title} (opens in new tab)`}
-        className={cardClassName}
-        style={cardStyle}
-      >
-        {content}
-      </a>
-    );
-  }
-
   return (
-    <div className={cardClassName} style={cardStyle}>
-      {content}
+    <div
+      className='overflow-hidden rounded-xl border border-[var(--border)] transition-colors duration-200 active:border-[var(--primary)]'
+      style={{ backgroundColor: 'var(--bg-elevated)' }}
+    >
+      {inner}
     </div>
   );
 }
 
 export default function Projects() {
-  const sectionRef = useRef<HTMLElement>(null);
-  const [isVisible, setIsVisible] = useState(false);
-  const [visibleItems, setVisibleItems] = useState<Set<number>>(new Set());
-
-  useEffect(() => {
-    const el = sectionRef.current;
-    if (!el) return;
-
-    const sectionObserver = new IntersectionObserver(
-      ([entry]) => {
-        if (entry?.isIntersecting) setIsVisible(true);
-      },
-      { threshold: 0.15 },
-    );
-    sectionObserver.observe(el);
-
-    return () => sectionObserver.disconnect();
-  }, []);
-
-  useEffect(() => {
-    if (!isVisible) return;
-
-    const itemRefs = PROJECTS.map((_, i) =>
-      document.getElementById(`project-item-${i}`),
-    ).filter(Boolean);
-
-    const observers = itemRefs.map((el, i) => {
-      if (!el) return null;
-      const observer = new IntersectionObserver(
-        ([entry]) => {
-          if (entry?.isIntersecting) {
-            setVisibleItems((prev) => new Set(prev).add(i));
-          }
-        },
-        { threshold: 0.2, rootMargin: '0px 0px -20px 0px' },
-      );
-      observer.observe(el);
-      return observer;
-    });
-
-    return () => observers.forEach((o) => o?.disconnect());
-  }, [isVisible]);
-
   return (
     <section
       id='projects'
-      ref={sectionRef}
       className='w-full border-t py-16 sm:py-20 md:py-24'
       style={{ borderColor: 'var(--border)', backgroundColor: 'var(--bg)' }}
       aria-labelledby='projects-heading'
@@ -215,20 +181,28 @@ export default function Projects() {
           Selected systems and infrastructure work.
         </p>
 
-        <div className='mt-10 grid gap-6 sm:gap-8 md:grid-cols-2'>
-          {PROJECTS.map((project, i) => (
-            <div key={project.id} id={`project-item-${i}`}>
-              <ProjectCard
-                project={project}
-                isVisible={visibleItems.has(i)}
-                delay={i * 80}
-              />
-            </div>
+        {/* Desktop: BounceCards with hover-expand */}
+        <div className='mt-12 hidden justify-center md:flex'>
+          <BounceCards
+            cards={PROJECTS}
+            containerWidth={720}
+            containerHeight={400}
+            transformStyles={TRANSFORM_STYLES}
+            enableHover={true}
+            animationDelay={0.5}
+            animationStagger={0.08}
+          />
+        </div>
+
+        {/* Mobile: expandable cards */}
+        <div className='mt-10 flex flex-col gap-3 md:hidden'>
+          {PROJECTS.map((project) => (
+            <MobileProjectCard key={project.title} project={project} />
           ))}
         </div>
 
         <p
-          className='mt-10 text-center text-sm sm:text-base'
+          className='mt-12 text-center text-sm sm:text-base'
           style={{ color: 'var(--text-muted)' }}
         >
           And many more —{' '}
