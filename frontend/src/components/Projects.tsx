@@ -19,7 +19,7 @@ const PROJECTS: BounceCard[] = [
     accent: 'linear-gradient(135deg, #22c55e, #16a34a)',
   },
   {
-    title: 'Garden Staking',
+    title: 'Garden Staking & Distributor',
     description:
       'Rust-based staking and reward distribution system. On-chain reward calculations with deterministic precision accounting.',
     href: 'https://app.garden.finance/stake',
@@ -27,29 +27,20 @@ const PROJECTS: BounceCard[] = [
     accent: 'linear-gradient(135deg, #8b5cf6, #7c3aed)',
   },
   {
-    title: 'Garden Orderbook',
+    title: 'Raga Vault',
     description:
-      'High-performance orderbook service powering Garden\'s cross-chain swap matching and execution engine.',
-    href: 'https://garden.finance',
-    tags: ['Hono', 'PostgreSQL', 'Workers', 'Hyperdrive', 'Orderbook'],
-    accent: 'linear-gradient(135deg, #3b82f6, #2563eb)',
-  },
-  {
-    title: 'Bitcoin ZMQ Watcher',
-    description:
-      'Real-time Bitcoin transaction monitoring via ZeroMQ. Watches mempool and block events for the Garden protocol.',
-    href: 'https://github.com/svssathvik7',
-    tags: ['Rust', 'Bitcoin', 'Real-time', 'ZeroMQ', 'Mempool'],
+      'Full-stack web app for exploring and cataloging Indian classical music ragas. React frontend with Hono backend, containerized with Docker.',
+    href: 'https://singers-frontend.pages.dev/',
+    tags: ['React', 'Hono', 'TypeScript', 'Docker', 'Music'],
     accent: 'linear-gradient(135deg, #ec4899, #db2777)',
   },
 ];
 
 const TRANSFORM_STYLES = [
-  'rotate(10deg) translate(-170px)',
-  'rotate(5deg) translate(-85px)',
-  'rotate(-3deg)',
-  'rotate(-10deg) translate(85px)',
-  'rotate(2deg) translate(170px)',
+  'rotate(8deg) translate(-130px)',
+  'rotate(3deg) translate(-44px)',
+  'rotate(-3deg) translate(44px)',
+  'rotate(-8deg) translate(130px)',
 ];
 
 function MobileProjectCard({ project }: { project: BounceCard }) {
