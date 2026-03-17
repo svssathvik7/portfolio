@@ -162,7 +162,7 @@ export default function Projects() {
   return (
     <section
       id='projects'
-      className='w-full border-t py-24 sm:py-32 md:py-40'
+      className='w-full border-t py-16 sm:py-20 md:py-24'
       style={{ borderColor: 'var(--border)', backgroundColor: 'var(--bg)' }}
       aria-labelledby='projects-heading'
     >
