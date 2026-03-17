@@ -39,7 +39,7 @@ function App() {
 
       <section
         id='hero'
-        className='relative mx-auto flex w-full max-w-3xl flex-col px-6 pt-28 pb-16 sm:px-10 sm:pt-32 sm:pb-20 lg:px-12 lg:pt-36 lg:pb-24'
+        className='relative mx-auto flex min-h-[70vh] w-full max-w-3xl flex-col justify-center px-6 py-16 sm:px-10 sm:py-20 lg:px-12 lg:py-24'
       >
         <div className='flex flex-col justify-center'>
           {/* Name */}
