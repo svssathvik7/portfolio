@@ -6,6 +6,7 @@ interface Entry {
   org: string;
   orgHref?: string;
   duration: string;
+  description: string;
   tags: string[];
   isActive?: boolean;
 }
@@ -17,6 +18,8 @@ const ENTRIES: Entry[] = [
     org: 'Garden Finance',
     orgHref: 'https://garden.finance/',
     duration: 'Sep 2024 – Present',
+    description:
+      'Building and maintaining backend infrastructure for cross-chain swap protocols. Working across Rust and TypeScript services powering Bitcoin, EVM, and Sui ecosystems.',
     tags: ['Rust', 'TypeScript', 'Distributed Systems', 'Blockchain'],
     isActive: true,
   },
@@ -25,13 +28,137 @@ const ENTRIES: Entry[] = [
     role: 'B.Tech, Computer Science',
     org: 'MVGR College of Engineering',
     duration: '2021 – 2025',
-    tags: ['CGPA 9.56', 'Algorithms', 'Systems'],
+    description:
+      'Graduated with a CGPA of 9.37. Built strong foundations in computer science, programming, and systems design.',
+    tags: ['Computer Science', 'Programming', 'CGPA 9.37'],
   },
 ];
+
+function AccordionEntry({ entry, isOpen, onToggle }: {
+  entry: Entry;
+  isOpen: boolean;
+  onToggle: () => void;
+}) {
+  return (
+    <div
+      className='group cursor-pointer border-b transition-colors'
+      style={{ borderColor: 'var(--border)' }}
+      onClick={onToggle}
+    >
+      {/* Header row */}
+      <div className='flex items-center gap-4 py-5 sm:gap-6 sm:py-6'>
+        {/* Left: accent line + duration */}
+        <div className='flex shrink-0 items-center gap-3'>
+          <div
+            className='h-8 w-[3px] rounded-full transition-colors duration-300'
+            style={{
+              backgroundColor: isOpen || entry.isActive ? 'var(--primary)' : 'var(--border)',
+            }}
+          />
+          <span
+            className='w-[120px] text-xs font-medium sm:w-[140px] sm:text-sm'
+            style={{
+              fontFamily: 'var(--font-mono)',
+              color: isOpen ? 'var(--primary)' : 'var(--text-muted)',
+              transition: 'color 0.3s',
+            }}
+          >
+            {entry.duration}
+            {entry.isActive && (
+              <span
+                className='ml-1.5 inline-block h-1.5 w-1.5 animate-pulse rounded-full align-middle'
+                style={{ backgroundColor: 'var(--primary)' }}
+              />
+            )}
+          </span>
+        </div>
+
+        {/* Middle: role + org */}
+        <div className='min-w-0 flex-1'>
+          <h3
+            className='text-base font-semibold tracking-tight sm:text-lg'
+            style={{
+              fontFamily: 'var(--font-sans)',
+              color: 'var(--text)',
+            }}
+          >
+            {entry.role}
+          </h3>
+          <p className='mt-0.5 text-xs sm:text-sm' style={{ color: 'var(--text-muted)' }}>
+            {entry.org}
+          </p>
+        </div>
+
+        {/* Right: toggle indicator */}
+        <svg
+          className='h-4 w-4 shrink-0 transition-transform duration-300 sm:h-5 sm:w-5'
+          style={{
+            color: isOpen ? 'var(--primary)' : 'var(--text-muted)',
+            transform: isOpen ? 'rotate(180deg)' : 'rotate(0deg)',
+          }}
+          fill='none'
+          stroke='currentColor'
+          viewBox='0 0 24 24'
+          aria-hidden
+        >
+          <path strokeLinecap='round' strokeLinejoin='round' strokeWidth={2} d='M19 9l-7 7-7-7' />
+        </svg>
+      </div>
+
+      {/* Expandable details */}
+      <div
+        className='exp-expand'
+        style={{ gridTemplateRows: isOpen ? '1fr' : '0fr' }}
+      >
+        <div className='overflow-hidden'>
+          <div className='pb-5 pl-[calc(3px+12px+120px+16px)] pr-4 sm:pb-6 sm:pl-[calc(3px+12px+140px+24px)]'>
+            <p
+              className='text-sm leading-relaxed'
+              style={{ color: 'var(--text-muted)' }}
+            >
+              {entry.description}
+            </p>
+            <div className='mt-3 flex flex-wrap gap-2'>
+              {entry.tags.map((tag) => (
+                <span
+                  key={tag}
+                  className='rounded-full border px-2.5 py-0.5 text-xs font-medium'
+                  style={{
+                    borderColor: 'var(--border)',
+                    color: 'var(--text-muted)',
+                    fontFamily: 'var(--font-mono)',
+                  }}
+                >
+                  {tag}
+                </span>
+              ))}
+            </div>
+            {entry.orgHref && (
+              <a
+                href={entry.orgHref}
+                target='_blank'
+                rel='noopener noreferrer'
+                className='mt-3 inline-flex items-center gap-1 text-xs font-medium hover:underline'
+                style={{ color: 'var(--primary)' }}
+                onClick={(e) => e.stopPropagation()}
+              >
+                Visit {entry.org}
+                <svg className='h-3 w-3' fill='none' stroke='currentColor' viewBox='0 0 24 24'>
+                  <path strokeLinecap='round' strokeLinejoin='round' strokeWidth={2} d='M7 17L17 7M17 7H7M17 7v10' />
+                </svg>
+              </a>
+            )}
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
 
 export default function Experience() {
   const sectionRef = useRef<HTMLElement>(null);
   const [visible, setVisible] = useState(false);
+  const [openIdx, setOpenIdx] = useState<number | null>(0); // First one open by default
 
   useEffect(() => {
     const el = sectionRef.current;
@@ -40,7 +167,7 @@ export default function Experience() {
       ([entry]) => {
         if (entry?.isIntersecting) setVisible(true);
       },
-      { threshold: 0.15 },
+      { threshold: 0.1 },
     );
     observer.observe(el);
     return () => observer.disconnect();
@@ -63,91 +190,22 @@ export default function Experience() {
           Experience
         </h2>
 
-        <div className='mt-10 flex flex-col'>
+        <div className='mt-8 border-t' style={{ borderColor: 'var(--border)' }}>
           {ENTRIES.map((entry, i) => (
             <div
               key={entry.id}
               className='transition-all duration-500 ease-out'
               style={{
                 opacity: visible ? 1 : 0,
-                transform: visible ? 'translateY(0)' : 'translateY(16px)',
-                transitionDelay: `${i * 150}ms`,
+                transform: visible ? 'translateY(0)' : 'translateY(12px)',
+                transitionDelay: `${i * 120}ms`,
               }}
             >
-              {/* Divider between entries — same style as hero */}
-              {i > 0 && (
-                <div className='my-8 flex items-center gap-3 sm:my-10'>
-                  <span
-                    className='h-px flex-1 bg-gradient-to-r from-transparent via-[var(--primary)] to-transparent opacity-40'
-                    aria-hidden
-                  />
-                  <span className='text-xs text-[var(--text-muted)] opacity-40' aria-hidden>
-                    •
-                  </span>
-                  <span
-                    className='h-px flex-1 bg-gradient-to-r from-transparent via-[var(--primary)] to-transparent opacity-40'
-                    aria-hidden
-                  />
-                </div>
-              )}
-
-              <div>
-                {/* Role */}
-                <h3
-                  className='text-xl font-semibold tracking-tight sm:text-2xl'
-                  style={{
-                    fontFamily: 'var(--font-serif)',
-                    color: entry.isActive ? 'var(--text)' : 'var(--text)',
-                  }}
-                >
-                  {entry.role}
-                </h3>
-
-                {/* Org + Duration on one line */}
-                <p className='mt-1.5 text-sm sm:text-base' style={{ color: 'var(--text-muted)' }}>
-                  {entry.orgHref ? (
-                    <a
-                      href={entry.orgHref}
-                      target='_blank'
-                      rel='noopener noreferrer'
-                      className='font-medium hover:underline'
-                      style={{ color: 'var(--primary)' }}
-                    >
-                      {entry.org}
-                    </a>
-                  ) : (
-                    <span className='font-medium' style={{ color: 'var(--text)' }}>
-                      {entry.org}
-                    </span>
-                  )}
-                  <span className='mx-2 opacity-40'>·</span>
-                  {entry.duration}
-                  {entry.isActive && (
-                    <span
-                      className='ml-2 inline-block h-2 w-2 animate-pulse rounded-full align-middle'
-                      style={{ backgroundColor: 'var(--primary)' }}
-                      aria-label='Currently active'
-                    />
-                  )}
-                </p>
-
-                {/* Tags */}
-                <div className='mt-3 flex flex-wrap gap-2'>
-                  {entry.tags.map((tag) => (
-                    <span
-                      key={tag}
-                      className='rounded-full border px-3 py-1 text-xs font-medium'
-                      style={{
-                        borderColor: 'var(--border)',
-                        color: 'var(--text-muted)',
-                        fontFamily: 'var(--font-mono)',
-                      }}
-                    >
-                      {tag}
-                    </span>
-                  ))}
-                </div>
-              </div>
+              <AccordionEntry
+                entry={entry}
+                isOpen={openIdx === i}
+                onToggle={() => setOpenIdx(openIdx === i ? null : i)}
+              />
             </div>
           ))}
         </div>

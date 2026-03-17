@@ -64,3 +64,9 @@ body {
 .bounce-card:hover .card-expand {
   grid-template-rows: 1fr;
 }
+
+/* Experience accordion expand */
+.exp-expand {
+  display: grid;
+  transition: grid-template-rows 0.35s ease-out;
+}
