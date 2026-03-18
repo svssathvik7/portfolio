@@ -180,23 +180,6 @@ export default function BounceCards({
               )}
             </div>
 
-            {/* Tags */}
-            <div className='mt-2 flex flex-wrap gap-1 px-4 pb-3'>
-              {card.tags.slice(0, 3).map((tag) => (
-                <span
-                  key={tag}
-                  className='rounded-full border px-2 py-0.5 text-[10px] font-medium'
-                  style={{
-                    borderColor: 'var(--border)',
-                    color: 'var(--text-muted)',
-                    fontFamily: 'var(--font-mono)',
-                  }}
-                >
-                  {tag}
-                </span>
-              ))}
-            </div>
-
             {/* Expandable details — grid-row transition via CSS */}
             <div className='card-expand'>
               <div className='overflow-hidden'>
@@ -207,23 +190,21 @@ export default function BounceCards({
                   >
                     {card.description}
                   </p>
-                  {card.tags.length > 3 && (
-                    <div className='mt-2 flex flex-wrap gap-1'>
-                      {card.tags.slice(3).map((tag) => (
-                        <span
-                          key={tag}
-                          className='rounded-full border px-2 py-0.5 text-[10px] font-medium'
-                          style={{
-                            borderColor: 'var(--border)',
-                            color: 'var(--text-muted)',
-                            fontFamily: 'var(--font-mono)',
-                          }}
-                        >
-                          {tag}
-                        </span>
-                      ))}
-                    </div>
-                  )}
+                  <div className='mt-2 flex flex-wrap gap-1'>
+                    {card.tags.map((tag) => (
+                      <span
+                        key={tag}
+                        className='rounded-full border px-2 py-0.5 text-[10px] font-medium'
+                        style={{
+                          borderColor: 'var(--border)',
+                          color: 'var(--text-muted)',
+                          fontFamily: 'var(--font-mono)',
+                        }}
+                      >
+                        {tag}
+                      </span>
+                    ))}
+                  </div>
                 </div>
               </div>
             </div>
