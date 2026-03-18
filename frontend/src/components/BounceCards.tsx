@@ -200,13 +200,7 @@ export default function BounceCards({
             <div className='card-expand'>
               <div className='overflow-hidden'>
                 <div className='border-t px-4 pb-3 pt-2' style={{ borderColor: 'var(--border)' }}>
-                  <p
-                    className='text-[11px] leading-relaxed'
-                    style={{ color: 'var(--text-muted)' }}
-                  >
-                    {card.description}
-                  </p>
-                  <div className='mt-2 flex flex-wrap gap-1'>
+                  <div className='flex flex-wrap gap-1'>
                     {card.tags.map((tag) => (
                       <span
                         key={tag}
