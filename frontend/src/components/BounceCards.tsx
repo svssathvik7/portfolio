@@ -180,7 +180,23 @@ export default function BounceCards({
               )}
             </div>
 
-            {/* Expandable details — grid-row transition via CSS */}
+            {/* Description — always visible, clamped to 3 lines */}
+            <div className='px-4 pb-3'>
+              <p
+                className='text-[11px] leading-relaxed'
+                style={{
+                  color: 'var(--text-muted)',
+                  display: '-webkit-box',
+                  WebkitLineClamp: 3,
+                  WebkitBoxOrient: 'vertical',
+                  overflow: 'hidden',
+                }}
+              >
+                {card.description}
+              </p>
+            </div>
+
+            {/* Expandable: full description + all tags */}
             <div className='card-expand'>
               <div className='overflow-hidden'>
                 <div className='border-t px-4 pb-3 pt-2' style={{ borderColor: 'var(--border)' }}>
