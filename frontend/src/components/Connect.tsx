@@ -1,4 +1,6 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState, type ReactNode } from 'react';
+import { SiGmail, SiInstagram, SiX, SiGithub } from 'react-icons/si';
+import { FaLinkedinIn } from 'react-icons/fa';
 
 interface ContactItem {
   id: string;
@@ -6,6 +8,8 @@ interface ContactItem {
   href: string;
   caption: string;
   isExternal: boolean;
+  icon: ReactNode;
+  color: string;
 }
 
 const CONTACTS: ContactItem[] = [
@@ -15,6 +19,8 @@ const CONTACTS: ContactItem[] = [
     href: 'mailto:svssathvik77@gmail.com',
     caption: 'For professional collaborations and opportunities.',
     isExternal: false,
+    icon: <SiGmail />,
+    color: '#EA4335',
   },
   {
     id: 'instagram',
@@ -22,6 +28,8 @@ const CONTACTS: ContactItem[] = [
     href: 'https://instagram.com/svssathvik',
     caption: 'For personal connects and behind-the-scenes.',
     isExternal: true,
+    icon: <SiInstagram />,
+    color: '#E4405F',
   },
   {
     id: 'x',
@@ -29,6 +37,8 @@ const CONTACTS: ContactItem[] = [
     href: 'https://x.com/stvk231133',
     caption: 'For opinions, tech thoughts, and random takes.',
     isExternal: true,
+    icon: <SiX />,
+    color: 'var(--text)',
   },
   {
     id: 'github',
@@ -36,6 +46,17 @@ const CONTACTS: ContactItem[] = [
     href: 'https://github.com/svssathvik7',
     caption: 'For code, repos, and open-source contributions.',
     isExternal: true,
+    icon: <SiGithub />,
+    color: 'var(--text)',
+  },
+  {
+    id: 'linkedin',
+    label: 'LinkedIn',
+    href: 'https://www.linkedin.com/in/venkata-sai-sathvik-seethamraju-a76596230/',
+    caption: 'For professional networking and career updates.',
+    isExternal: true,
+    icon: <FaLinkedinIn />,
+    color: '#0A66C2',
   },
 ];
 
@@ -65,14 +86,25 @@ function ContactCard({
         transitionDelay: isVisible ? `${delay}ms` : '0ms',
       }}
     >
-      <h3
-        className='text-base font-semibold transition-colors duration-300 group-hover:text-[var(--primary)] sm:text-lg'
-        style={{ color: 'var(--text)' }}
-      >
-        {item.label}
-      </h3>
+      <div className='flex items-center gap-3'>
+        <span
+          className='flex h-10 w-10 shrink-0 items-center justify-center rounded-xl text-lg transition-transform duration-300 group-hover:scale-110'
+          style={{
+            color: item.color,
+            backgroundColor: 'color-mix(in srgb, var(--text-muted) 8%, transparent)',
+          }}
+        >
+          {item.icon}
+        </span>
+        <h3
+          className='text-base font-semibold transition-colors duration-300 group-hover:text-[var(--primary)] sm:text-lg'
+          style={{ color: 'var(--text)' }}
+        >
+          {item.label}
+        </h3>
+      </div>
       <p
-        className='mt-2 text-sm leading-relaxed'
+        className='mt-3 text-sm leading-relaxed'
         style={{ color: 'var(--text-muted)' }}
       >
         {item.caption}

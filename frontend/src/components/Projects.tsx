@@ -27,6 +27,14 @@ const PROJECTS: BounceCard[] = [
     accent: 'linear-gradient(135deg, #8b5cf6, #7c3aed)',
   },
   {
+    title: 'Conductor',
+    description:
+      'Self-hosted visual API workflow tester. Chain HTTP requests, extract variables, add conditional gates, loop steps, parallel execution — run multi-step flows with one click.',
+    href: 'https://github.com/svssathvik7/conductor',
+    tags: ['Rust', 'React', 'SQLite', 'SSE', 'API Testing'],
+    accent: 'linear-gradient(135deg, #6366f1, #a855f7)',
+  },
+  {
     title: 'Raga Vault',
     description:
       'Platform for singers to store songs, stage time content, and song metadata in one place. Advanced filtering to find songs matching complex criteria.',
@@ -37,10 +45,11 @@ const PROJECTS: BounceCard[] = [
 ];
 
 const TRANSFORM_STYLES = [
-  'rotate(8deg) translate(-160px)',
-  'rotate(3deg) translate(-54px)',
-  'rotate(-3deg) translate(54px)',
-  'rotate(-8deg) translate(160px)',
+  'rotate(10deg) translate(-200px)',
+  'rotate(5deg) translate(-100px)',
+  'rotate(-1deg) translate(0px)',
+  'rotate(-5deg) translate(100px)',
+  'rotate(-10deg) translate(200px)',
 ];
 
 function MobileProjectCard({ project }: { project: BounceCard }) {
@@ -185,8 +194,8 @@ export default function Projects() {
         <div className='mt-12 hidden justify-center md:flex'>
           <BounceCards
             cards={PROJECTS}
-            containerWidth={720}
-            containerHeight={400}
+            containerWidth={800}
+            containerHeight={420}
             transformStyles={TRANSFORM_STYLES}
             enableHover={true}
             animationDelay={0.5}
