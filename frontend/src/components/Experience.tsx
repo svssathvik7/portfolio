@@ -41,8 +41,7 @@ function AccordionEntry({ entry, isOpen, onToggle }: {
 }) {
   return (
     <div
-      className='group cursor-pointer border-b transition-colors'
-      style={{ borderColor: 'var(--border)' }}
+      className='group cursor-pointer transition-colors'
       onClick={onToggle}
     >
       {/* Header row */}
@@ -177,8 +176,8 @@ export default function Experience() {
     <section
       id='experience'
       ref={sectionRef}
-      className='w-full border-t py-16 sm:py-20 md:py-24'
-      style={{ borderColor: 'var(--border)', backgroundColor: 'var(--bg)' }}
+      className='w-full py-10 sm:py-14 md:py-16'
+      style={{ backgroundColor: 'var(--bg)' }}
       aria-labelledby='experience-heading'
     >
       <div className='mx-auto max-w-3xl px-6 sm:px-10 lg:px-12'>
@@ -190,7 +189,7 @@ export default function Experience() {
           Experience
         </h2>
 
-        <div className='mt-8 border-t' style={{ borderColor: 'var(--border)' }}>
+        <div className='mt-8'>
           {ENTRIES.map((entry, i) => (
             <div
               key={entry.id}

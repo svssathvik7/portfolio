@@ -161,8 +161,8 @@ export default function Connect() {
     <section
       id='connect'
       ref={sectionRef}
-      className='w-full border-t py-16 sm:py-20 md:py-24'
-      style={{ borderColor: 'var(--border)', backgroundColor: 'var(--bg)' }}
+      className='w-full py-10 sm:py-14 md:py-16'
+      style={{ backgroundColor: 'var(--bg)' }}
       aria-labelledby='connect-heading'
     >
       <div className='mx-auto max-w-3xl px-6 sm:px-10 lg:px-12'>

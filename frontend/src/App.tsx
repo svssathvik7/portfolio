@@ -25,7 +25,7 @@ function App() {
     <main className='relative min-h-screen w-full overflow-hidden bg-[var(--bg)] text-[var(--text)] transition-colors duration-300'>
       {/* Subtle background pattern */}
       <div
-        className='pointer-events-none absolute inset-0 opacity-[0.03] dark:opacity-[0.05]'
+        className='pointer-events-none absolute inset-0 opacity-[0.015] dark:opacity-[0.03]'
         style={{
           backgroundImage: `
             linear-gradient(var(--text) 1px, transparent 1px),
@@ -39,7 +39,7 @@ function App() {
 
       <section
         id='hero'
-        className='relative mx-auto flex min-h-screen w-full max-w-3xl flex-col px-6 py-12 sm:px-10 sm:py-16 lg:px-12 lg:py-20'
+        className='relative mx-auto flex min-h-[85vh] w-full max-w-3xl flex-col px-6 py-10 sm:px-10 sm:py-14 lg:px-12 lg:py-16'
       >
         <div className='my-auto flex flex-col justify-center'>
           {/* Name */}
