@@ -27,20 +27,19 @@ const PROJECTS: BounceCard[] = [
     accent: 'linear-gradient(135deg, #8b5cf6, #7c3aed)',
   },
   {
-    title: 'Conductor',
-    description:
-      'Self-hosted visual API workflow tester. Chain HTTP requests, extract variables, add conditional gates, loop steps, parallel execution — run multi-step flows with one click.',
-    href: 'https://github.com/svssathvik7/conductor',
-    tags: ['Rust', 'React', 'SQLite', 'SSE', 'API Testing'],
-    accent: 'linear-gradient(135deg, #6366f1, #a855f7)',
-  },
-  {
     title: 'Raga Vault',
     description:
       'Platform for singers to store songs, stage time content, and song metadata in one place. Advanced filtering to find songs matching complex criteria.',
     href: 'https://singers-frontend.pages.dev/',
     tags: ['React', 'Hono', 'TypeScript', 'Docker', 'Full-Stack'],
     accent: 'linear-gradient(135deg, #ec4899, #db2777)',
+  },
+  {
+    title: 'Opus Music',
+    description:
+      'Free online vocal remover — upload an MP3, AI strips the lead vocals, download the instrumental track. Next.js + FastAPI with Demucs on Apple Silicon GPU.',
+    tags: ['Next.js', 'FastAPI', 'Demucs', 'AI', 'Full-Stack'],
+    accent: 'linear-gradient(135deg, #f59e0b, #d97706)',
   },
 ];
 
