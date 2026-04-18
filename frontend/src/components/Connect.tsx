@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState, type ReactNode } from 'react';
 import { SiGmail, SiInstagram, SiX, SiGithub } from 'react-icons/si';
 import { FaLinkedinIn } from 'react-icons/fa';
+import DoodleIcon from './decorations/DoodleIcon';
 
 interface ContactItem {
   id: string;
@@ -166,13 +167,19 @@ export default function Connect() {
       aria-labelledby='connect-heading'
     >
       <div className='mx-auto max-w-3xl px-6 sm:px-10 lg:px-12'>
-        <h2
-          id='connect-heading'
-          className='font-serif text-2xl font-bold tracking-tight sm:text-3xl'
-          style={{ fontFamily: 'var(--font-serif)', color: 'var(--text)' }}
-        >
-          Let&apos;s Connect
-        </h2>
+        <div className='flex items-center gap-3'>
+          <DoodleIcon
+            variant='envelope'
+            className='h-5 w-5 shrink-0 text-[var(--text-muted)] sm:h-6 sm:w-6'
+          />
+          <h2
+            id='connect-heading'
+            className='font-serif text-2xl font-bold tracking-tight sm:text-3xl'
+            style={{ fontFamily: 'var(--font-serif)', color: 'var(--text)' }}
+          >
+            Let&apos;s Connect
+          </h2>
+        </div>
         <p
           className='mt-2 text-base sm:text-lg'
           style={{ color: 'var(--text-muted)' }}

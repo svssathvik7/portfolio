@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import BounceCards, { type BounceCard } from './BounceCards';
+import DoodleIcon from './decorations/DoodleIcon';
 
 const PROJECTS: BounceCard[] = [
   {
@@ -175,13 +176,19 @@ export default function Projects() {
       aria-labelledby='projects-heading'
     >
       <div className='mx-auto max-w-3xl px-6 sm:px-10 lg:px-12'>
-        <h2
-          id='projects-heading'
-          className='font-serif text-2xl font-bold tracking-tight sm:text-3xl'
-          style={{ fontFamily: 'var(--font-serif)', color: 'var(--text)' }}
-        >
-          Projects
-        </h2>
+        <div className='flex items-center gap-3'>
+          <DoodleIcon
+            variant='spark'
+            className='h-5 w-5 shrink-0 text-[var(--text-muted)] sm:h-6 sm:w-6'
+          />
+          <h2
+            id='projects-heading'
+            className='font-serif text-2xl font-bold tracking-tight sm:text-3xl'
+            style={{ fontFamily: 'var(--font-serif)', color: 'var(--text)' }}
+          >
+            Projects
+          </h2>
+        </div>
         <p
           className='mt-2 text-base sm:text-lg'
           style={{ color: 'var(--text-muted)' }}

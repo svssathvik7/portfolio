@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
+import DoodleIcon from './decorations/DoodleIcon';
 
 interface Entry {
   id: string;
@@ -181,13 +182,19 @@ export default function Experience() {
       aria-labelledby='experience-heading'
     >
       <div className='mx-auto max-w-3xl px-6 sm:px-10 lg:px-12'>
-        <h2
-          id='experience-heading'
-          className='font-serif text-2xl font-bold tracking-tight sm:text-3xl'
-          style={{ fontFamily: 'var(--font-serif)', color: 'var(--text)' }}
-        >
-          Experience
-        </h2>
+        <div className='flex items-center gap-3'>
+          <DoodleIcon
+            variant='briefcase'
+            className='h-5 w-5 shrink-0 text-[var(--text-muted)] sm:h-6 sm:w-6'
+          />
+          <h2
+            id='experience-heading'
+            className='font-serif text-2xl font-bold tracking-tight sm:text-3xl'
+            style={{ fontFamily: 'var(--font-serif)', color: 'var(--text)' }}
+          >
+            Experience
+          </h2>
+        </div>
 
         <div className='mt-8'>
           {ENTRIES.map((entry, i) => (
