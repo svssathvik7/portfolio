@@ -72,7 +72,15 @@ body {
   transition: grid-template-rows 0.35s ease-out;
 }
 
-/* Wave divider infinite flow */
+/* Wave divider — stronger in light, softer in dark */
+.wave-svg {
+  opacity: 0.85;
+}
+
+.dark .wave-svg {
+  opacity: 0.5;
+}
+
 .wave-scroll {
   transform-box: fill-box;
   animation: wave-scroll 14s linear infinite;
