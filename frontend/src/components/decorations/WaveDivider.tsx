@@ -12,7 +12,9 @@ export default function WaveDivider({ className }: WaveDividerProps) {
         fill='var(--primary-soft)'
         style={{ opacity: 0.5 }}
       >
-        <path d='M 0 40 C 240 10, 480 70, 720 40 S 1200 10, 1440 40 V 80 H 0 Z' />
+        <g className='wave-scroll'>
+          <path d='M 0 40 C 240 10, 480 70, 720 40 C 960 10, 1200 70, 1440 40 C 1680 10, 1920 70, 2160 40 C 2400 10, 2640 70, 2880 40 V 80 H 0 Z' />
+        </g>
       </svg>
     </div>
   );

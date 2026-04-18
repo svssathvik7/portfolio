@@ -71,3 +71,21 @@ body {
   display: grid;
   transition: grid-template-rows 0.35s ease-out;
 }
+
+/* Wave divider infinite flow */
+.wave-scroll {
+  transform-box: fill-box;
+  animation: wave-scroll 14s linear infinite;
+  will-change: transform;
+}
+
+@keyframes wave-scroll {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .wave-scroll {
+    animation: none;
+  }
+}

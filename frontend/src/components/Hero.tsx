@@ -1,6 +1,5 @@
 import InkUnderline from './decorations/InkUnderline';
 import MusicalNotes from './decorations/MusicalNotes';
-import ScriptSignature from './decorations/ScriptSignature';
 
 export default function Hero() {
   return (
@@ -9,17 +8,15 @@ export default function Hero() {
       className='relative mx-auto flex min-h-[85vh] w-full max-w-3xl flex-col px-6 py-10 sm:px-10 sm:py-14 lg:px-12 lg:py-16'
     >
       <div className='my-auto flex flex-col justify-center'>
-        <ScriptSignature className='text-xl text-[var(--primary)]/80 sm:text-2xl' />
-
         <h1
-          className='mt-1 font-serif text-3xl font-semibold tracking-tight text-[var(--text)] sm:text-4xl'
-          style={{ fontFamily: 'var(--font-serif)' }}
+          className='text-4xl text-[var(--primary)]/85 sm:text-5xl'
+          style={{ fontFamily: 'var(--font-script)' }}
         >
-          Sathvik
+          ~ sathvik
         </h1>
 
         <p
-          className='mt-3 font-serif text-4xl font-bold leading-[1.15] tracking-tight text-[var(--text)] sm:text-5xl md:text-6xl'
+          className='mt-4 font-serif text-4xl font-bold leading-[1.15] tracking-tight text-[var(--text)] sm:text-5xl md:text-6xl'
           style={{ fontFamily: 'var(--font-serif)' }}
         >
           Systems.{' '}
@@ -30,7 +27,7 @@ export default function Hero() {
           . Checkmates.
         </p>
 
-        <div className='mt-8 h-3 w-48 text-[var(--primary)] opacity-70'>
+        <div className='-mt-2 h-3 w-48 text-[var(--primary)] opacity-70'>
           <InkUnderline className='h-full w-full' />
         </div>
 
