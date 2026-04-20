@@ -4,6 +4,7 @@
   --font-serif: 'Cormorant Garamond', Georgia, serif;
   --font-sans: 'DM Sans', ui-sans-serif, system-ui, sans-serif;
   --font-mono: 'JetBrains Mono', ui-monospace, monospace;
+  --font-script: 'Caveat', 'Brush Script MT', cursive;
 }
 
 :root {
@@ -69,4 +70,30 @@ body {
 .exp-expand {
   display: grid;
   transition: grid-template-rows 0.35s ease-out;
+}
+
+/* Wave divider — stronger in light, softer in dark */
+.wave-svg {
+  opacity: 0.85;
+}
+
+.dark .wave-svg {
+  opacity: 0.5;
+}
+
+.wave-scroll {
+  transform-box: fill-box;
+  animation: wave-scroll 14s linear infinite;
+  will-change: transform;
+}
+
+@keyframes wave-scroll {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .wave-scroll {
+    animation: none;
+  }
 }
