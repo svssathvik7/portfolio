@@ -1,186 +1,161 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react';
 
 const SECTIONS = [
-  { id: 'hero', label: 'Home' },
+  { id: 'about', label: 'About' },
   { id: 'experience', label: 'Experience' },
   { id: 'projects', label: 'Projects' },
-  { id: 'connect', label: 'Connect' },
-] as const
-
-function NavLink({
-  href,
-  label,
-  isActive,
-  onClick,
-}: {
-  href: string
-  label: string
-  isActive: boolean
-  onClick: (e: React.MouseEvent<HTMLAnchorElement>) => void
-}) {
-  return (
-    <a
-      href={href}
-      onClick={onClick}
-      className={`relative px-3 py-2 text-sm font-medium transition-colors sm:px-4 sm:text-base ${
-        isActive
-          ? 'text-[var(--primary)]'
-          : 'text-[var(--text-muted)] hover:text-[var(--text)]'
-      }`}
-      aria-current={isActive ? 'location' : undefined}
-    >
-      {label}
-      {isActive && (
-        <span
-          className="absolute bottom-0 left-4 right-4 h-0.5 rounded-full sm:left-5 sm:right-5"
-          style={{ backgroundColor: 'var(--primary)' }}
-          aria-hidden
-        />
-      )}
-    </a>
-  )
-}
+  { id: 'connect', label: 'Contact' },
+] as const;
 
 interface NavbarProps {
-  onThemeToggle?: () => void
-  themeMode?: 'light' | 'dark'
+  onThemeToggle?: () => void;
+  themeMode?: 'light' | 'dark';
 }
 
 export default function Navbar({ onThemeToggle, themeMode = 'light' }: NavbarProps) {
-  const [activeId, setActiveId] = useState<string>(SECTIONS[0].id)
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
+  const [activeId, setActiveId] = useState<string>('about');
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
       (entries) => {
         for (const entry of entries) {
           if (entry.isIntersecting) {
-            const id = entry.target.getAttribute('id')
-            if (id) setActiveId(id)
+            const id = entry.target.getAttribute('id');
+            if (id) setActiveId(id);
           }
         }
       },
-      {
-        rootMargin: '-20% 0px -70% 0px',
-        threshold: 0,
-      }
-    )
-
+      { rootMargin: '-20% 0px -70% 0px', threshold: 0 },
+    );
     SECTIONS.forEach(({ id }) => {
-      const el = document.getElementById(id)
-      if (el) observer.observe(el)
-    })
-
-    return () => observer.disconnect()
-  }, [])
+      const el = document.getElementById(id);
+      if (el) observer.observe(el);
+    });
+    return () => observer.disconnect();
+  }, []);
 
   const handleClick = (e: React.MouseEvent<HTMLAnchorElement>, id: string) => {
-    e.preventDefault()
-    setMobileMenuOpen(false)
-    document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' })
-  }
+    e.preventDefault();
+    setMobileMenuOpen(false);
+    document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' });
+  };
 
   useEffect(() => {
     const handleEscape = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') setMobileMenuOpen(false)
-    }
+      if (e.key === 'Escape') setMobileMenuOpen(false);
+    };
     const handleResize = () => {
-      if (window.innerWidth >= 768) setMobileMenuOpen(false)
-    }
-    window.addEventListener('keydown', handleEscape)
-    window.addEventListener('resize', handleResize)
+      if (window.innerWidth >= 768) setMobileMenuOpen(false);
+    };
+    window.addEventListener('keydown', handleEscape);
+    window.addEventListener('resize', handleResize);
     return () => {
-      window.removeEventListener('keydown', handleEscape)
-      window.removeEventListener('resize', handleResize)
-    }
-  }, [])
+      window.removeEventListener('keydown', handleEscape);
+      window.removeEventListener('resize', handleResize);
+    };
+  }, []);
 
   useEffect(() => {
-    if (mobileMenuOpen) {
-      document.body.style.overflow = 'hidden'
-    } else {
-      document.body.style.overflow = ''
-    }
-    return () => {
-      document.body.style.overflow = ''
-    }
-  }, [mobileMenuOpen])
-
-  const ThemeToggle = () =>
-    onThemeToggle ? (
-      <button
-        onClick={onThemeToggle}
-        className="group flex h-9 w-9 shrink-0 items-center justify-center rounded-full border text-[var(--text-muted)] transition-all hover:border-[var(--primary)] hover:text-[var(--text)] focus:outline-none focus:ring-2 focus:ring-[var(--ring)] sm:h-10 sm:w-10"
-        style={{ borderColor: 'var(--border)' }}
-        aria-label={themeMode === 'light' ? 'Switch to dark mode' : 'Switch to light mode'}
-      >
-        <svg
-          className="h-4 w-4 transition-transform group-hover:rotate-12 sm:h-5 sm:w-5"
-          fill="none"
-          stroke="currentColor"
-          viewBox="0 0 24 24"
-        >
-          {themeMode === 'light' ? (
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth={2}
-              d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"
-            />
-          ) : (
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth={2}
-              d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"
-            />
-          )}
-        </svg>
-      </button>
-    ) : null
+    document.body.style.overflow = mobileMenuOpen ? 'hidden' : '';
+    return () => { document.body.style.overflow = ''; };
+  }, [mobileMenuOpen]);
 
   return (
-    <nav
-      className="sticky top-0 z-50 w-full border-b border-[var(--border)] bg-(--bg-elevated)/90 backdrop-blur-md"
-      aria-label="Main navigation"
-    >
-      <div className="mx-auto flex max-w-3xl items-center justify-between px-4 py-3 sm:px-10 sm:py-4 lg:px-12">
-        {/* Desktop: horizontal nav */}
-        <div className="hidden items-center gap-1 md:flex md:gap-2">
+    <div className="sticky top-4 z-50 px-4 sm:px-6">
+      <nav
+        className="mx-auto flex max-w-[900px] items-center justify-between px-5 py-2.5 rounded-full border"
+        style={{
+          background: 'color-mix(in oklch, var(--c-card) 86%, transparent)',
+          backdropFilter: 'blur(14px)',
+          WebkitBackdropFilter: 'blur(14px)',
+          borderColor: 'var(--c-line)',
+          boxShadow: 'var(--shadow-sm)',
+        }}
+        aria-label="Main navigation"
+      >
+        {/* Brand */}
+        <div
+          className="flex items-center gap-2.5 font-semibold tracking-tight select-none"
+          style={{ letterSpacing: '-0.01em', color: 'var(--c-ink)' }}
+        >
+          <div
+            className="w-[22px] h-[22px] rounded-full shrink-0"
+            style={{
+              background: 'radial-gradient(circle at 30% 30%, var(--c-sky-200), var(--c-sky-500))',
+              boxShadow: 'inset 0 -4px 8px oklch(55% 0.15 205 / 0.5), 0 4px 14px oklch(60% 0.15 205 / 0.35)',
+              animation: 'bob 5s ease-in-out infinite',
+            }}
+          />
+          <span className="hidden sm:inline">sathvik.dev</span>
+        </div>
+
+        {/* Desktop links */}
+        <div className="hidden md:flex items-center gap-1">
           {SECTIONS.map(({ id, label }) => (
-            <NavLink
+            <a
               key={id}
               href={`#${id}`}
-              label={label}
-              isActive={activeId === id}
               onClick={(e) => handleClick(e, id)}
-            />
+              className="px-3.5 py-2 rounded-full text-sm font-medium transition-all duration-200"
+              style={{
+                color: activeId === id ? 'var(--c-ink)' : 'var(--c-ink-soft)',
+                background: activeId === id ? 'var(--c-sky-50)' : 'transparent',
+              }}
+              aria-current={activeId === id ? 'location' : undefined}
+            >
+              {label}
+            </a>
           ))}
         </div>
 
-        {/* Mobile: hamburger + theme */}
-        <div className="flex w-full items-center justify-between md:w-auto md:justify-end md:gap-2">
+        {/* Right side: theme toggle + CTA */}
+        <div className="flex items-center gap-2">
+          {onThemeToggle && (
+            <button
+              onClick={onThemeToggle}
+              className="h-9 w-9 rounded-full border flex items-center justify-center transition-all duration-200 hover:border-[var(--c-sky-300)]"
+              style={{
+                borderColor: 'var(--c-line)',
+                color: 'var(--c-mute)',
+              }}
+              aria-label={themeMode === 'light' ? 'Switch to dark mode' : 'Switch to light mode'}
+            >
+              <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                {themeMode === 'light' ? (
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2}
+                    d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+                ) : (
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2}
+                    d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
+                )}
+              </svg>
+            </button>
+          )}
+
+          <button
+            className="hidden sm:flex px-4 py-2 rounded-full text-sm font-semibold border-none transition-all duration-150 hover:-translate-y-0.5"
+            style={{
+              background: 'var(--c-ink)',
+              color: 'var(--bg)',
+            }}
+            onClick={() => document.getElementById('connect')?.scrollIntoView({ behavior: 'smooth' })}
+          >
+            Say hi
+          </button>
+
+          {/* Mobile hamburger */}
           <button
             onClick={() => setMobileMenuOpen((o) => !o)}
-            className="flex h-10 w-10 items-center justify-center rounded-lg border text-[var(--text-muted)] transition-colors hover:border-[var(--primary)] hover:text-[var(--text)] focus:outline-none focus:ring-2 focus:ring-[var(--ring)] md:hidden"
-            style={{ borderColor: 'var(--border)' }}
+            className="flex md:hidden h-9 w-9 items-center justify-center rounded-full border transition-colors"
+            style={{ borderColor: 'var(--c-line)', color: 'var(--c-mute)' }}
             aria-expanded={mobileMenuOpen}
             aria-label={mobileMenuOpen ? 'Close menu' : 'Open menu'}
           >
-            <svg
-              className="h-5 w-5 transition-transform duration-200"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-              style={{ transform: mobileMenuOpen ? 'rotate(90deg)' : 'none' }}
-            >
+            <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+              style={{ transform: mobileMenuOpen ? 'rotate(90deg)' : 'none', transition: 'transform 0.2s' }}>
               {mobileMenuOpen ? (
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M6 18L18 6M6 6l12 12"
-                />
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
               ) : (
                 <>
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16" />
@@ -190,45 +165,26 @@ export default function Navbar({ onThemeToggle, themeMode = 'light' }: NavbarPro
               )}
             </svg>
           </button>
-
-          <ThemeToggle />
         </div>
-      </div>
+      </nav>
 
-      {/* Mobile menu overlay */}
+      {/* Mobile menu */}
       <div
-        className={`fixed inset-0 top-[53px] z-40 bg-[var(--bg)]/80 backdrop-blur-sm transition-opacity duration-300 md:hidden ${
-          mobileMenuOpen ? 'pointer-events-auto opacity-100' : 'pointer-events-none opacity-0'
+        className={`absolute left-4 right-4 top-[calc(100%+8px)] rounded-2xl border overflow-hidden transition-all duration-300 md:hidden ${
+          mobileMenuOpen ? 'opacity-100 translate-y-0 shadow-xl pointer-events-auto' : 'opacity-0 -translate-y-2 pointer-events-none'
         }`}
-        onClick={() => setMobileMenuOpen(false)}
-        aria-hidden="true"
-      />
-
-      {/* Mobile menu panel */}
-      <div
-        className={`fixed left-4 right-4 top-[61px] z-40 overflow-hidden rounded-2xl border transition-all duration-300 ease-out md:hidden ${
-          mobileMenuOpen
-            ? 'translate-y-0 opacity-100 shadow-xl'
-            : '-translate-y-2 opacity-0 pointer-events-none'
-        }`}
-        style={{
-          borderColor: 'var(--border)',
-          backgroundColor: 'var(--bg-elevated)',
-        }}
+        style={{ borderColor: 'var(--c-line)', background: 'var(--c-card)' }}
       >
-        <nav className="flex flex-col py-2" aria-label="Mobile navigation">
+        <nav className="flex flex-col py-2">
           {SECTIONS.map(({ id, label }) => (
             <a
               key={id}
               href={`#${id}`}
               onClick={(e) => handleClick(e, id)}
-              className={`flex items-center px-5 py-3 text-base font-medium transition-colors ${
-                activeId === id
-                  ? 'text-[var(--primary)]'
-                  : 'text-[var(--text-muted)] active:bg-[var(--bg)]'
-              }`}
+              className="flex items-center px-5 py-3 text-sm font-medium transition-colors"
               style={{
-                borderLeft: activeId === id ? '3px solid var(--primary)' : '3px solid transparent',
+                color: activeId === id ? 'var(--c-accent-ink)' : 'var(--c-ink-soft)',
+                borderLeft: activeId === id ? '3px solid var(--c-accent)' : '3px solid transparent',
               }}
               aria-current={activeId === id ? 'location' : undefined}
             >
@@ -237,6 +193,15 @@ export default function Navbar({ onThemeToggle, themeMode = 'light' }: NavbarPro
           ))}
         </nav>
       </div>
-    </nav>
-  )
+
+      {/* Mobile backdrop */}
+      {mobileMenuOpen && (
+        <div
+          className="fixed inset-0 z-[-1]"
+          onClick={() => setMobileMenuOpen(false)}
+          aria-hidden
+        />
+      )}
+    </div>
+  );
 }
