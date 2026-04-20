@@ -210,3 +210,29 @@ body {
     animation: none;
   }
 }
+
+/* Wave divider — stronger in light, softer in dark */
+.wave-svg {
+  opacity: 0.85;
+}
+
+.dark .wave-svg {
+  opacity: 0.5;
+}
+
+.wave-scroll {
+  transform-box: fill-box;
+  animation: wave-scroll 14s linear infinite;
+  will-change: transform;
+}
+
+@keyframes wave-scroll {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .wave-scroll {
+    animation: none;
+  }
+}
