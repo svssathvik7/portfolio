@@ -1,219 +1,349 @@
-import { useEffect, useRef, useState } from 'react';
-import DoodleIcon from './decorations/DoodleIcon';
+import { useEffect, useRef, useState } from "react";
 
-interface Entry {
-  id: string;
+interface Checkpoint {
+  t: number;
+  when: string;
   role: string;
-  org: string;
+  company: string;
   orgHref?: string;
-  duration: string;
-  description: string;
-  tags: string[];
-  isActive?: boolean;
+  story: string;
+  tools: string[];
+  side: "above" | "below";
 }
 
-const ENTRIES: Entry[] = [
+const CHECKPOINTS: Checkpoint[] = [
   {
-    id: 'garden',
-    role: 'Software Developer I',
-    org: 'Garden Finance',
-    orgHref: 'https://garden.finance/',
-    duration: 'Sep 2024 – Present',
-    description:
-      'Building and maintaining backend infrastructure for cross-chain swap protocols. Working across Rust and TypeScript services powering Bitcoin, EVM, and Sui ecosystems.',
-    tags: ['Rust', 'TypeScript', 'Distributed Systems', 'Blockchain'],
-    isActive: true,
+    t: 0.05,
+    when: "2021 – 2025",
+    role: "B.Tech CSE (Honors)",
+    company: "MVGR College of Engineering",
+    story:
+      "Graduated with a CGPA of 9.37. Built strong CS fundamentals, fell in love with systems programming, and shipped more side projects than assignments.",
+    tools: ["C++", "Java", "Python", "CGPA 9.37"],
+    side: "below",
   },
   {
-    id: 'mvgr',
-    role: 'B.Tech, Computer Science',
-    org: 'MVGR College of Engineering',
-    duration: '2021 – 2025',
-    description:
-      'Graduated with a CGPA of 9.37. Built strong foundations in computer science, programming, and systems design.',
-    tags: ['Computer Science', 'Programming', 'CGPA 9.37'],
+    t: 0.5,
+    when: "Sep 2024 – Jun 2025",
+    role: "SDE Intern",
+    company: "Garden Finance",
+    orgHref: "https://garden.finance/",
+    story:
+      "Built and maintained backend infrastructure for cross-chain swap protocols. Worked on the Garden SDK — TypeScript SDK for Bitcoin HTLC atomic swaps across EVM, Sui, and Spark.",
+    tools: ["Rust", "TypeScript", "Bitcoin", "EVM"],
+    side: "above",
+  },
+  {
+    t: 0.93,
+    when: "Jun 2025 – present",
+    role: "Software Developer I",
+    company: "Garden Finance",
+    orgHref: "https://garden.finance/",
+    story:
+      "Full-time backend engineer powering cross-chain swaps. Owns the staking & distributor system, RPC proxy infra, and multi-chain settlement pipelines.",
+    tools: ["Rust", "TypeScript", "Distributed Systems", "Blockchain"],
+    side: "below",
   },
 ];
 
-function AccordionEntry({ entry, isOpen, onToggle }: {
-  entry: Entry;
-  isOpen: boolean;
-  onToggle: () => void;
-}) {
-  return (
-    <div
-      className='group cursor-pointer transition-colors'
-      onClick={onToggle}
-    >
-      {/* Header row */}
-      <div className='flex items-center gap-4 py-5 sm:gap-6 sm:py-6'>
-        {/* Left: accent line + duration */}
-        <div className='flex shrink-0 items-center gap-3'>
-          <div
-            className='h-8 w-[3px] rounded-full transition-colors duration-300'
-            style={{
-              backgroundColor: isOpen || entry.isActive ? 'var(--primary)' : 'var(--border)',
-            }}
-          />
-          <span
-            className='w-[120px] text-xs font-medium sm:w-[140px] sm:text-sm'
-            style={{
-              fontFamily: 'var(--font-mono)',
-              color: isOpen ? 'var(--primary)' : 'var(--text-muted)',
-              transition: 'color 0.3s',
-            }}
-          >
-            {entry.duration}
-            {entry.isActive && (
-              <span
-                className='ml-1.5 inline-block h-1.5 w-1.5 animate-pulse rounded-full align-middle'
-                style={{ backgroundColor: 'var(--primary)' }}
-              />
-            )}
-          </span>
-        </div>
-
-        {/* Middle: role + org */}
-        <div className='min-w-0 flex-1'>
-          <h3
-            className='text-base font-semibold tracking-tight sm:text-lg'
-            style={{
-              fontFamily: 'var(--font-sans)',
-              color: 'var(--text)',
-            }}
-          >
-            {entry.role}
-          </h3>
-          <p className='mt-0.5 text-xs sm:text-sm' style={{ color: 'var(--text-muted)' }}>
-            {entry.org}
-          </p>
-        </div>
-
-        {/* Right: toggle indicator */}
-        <svg
-          className='h-4 w-4 shrink-0 transition-transform duration-300 sm:h-5 sm:w-5'
-          style={{
-            color: isOpen ? 'var(--primary)' : 'var(--text-muted)',
-            transform: isOpen ? 'rotate(180deg)' : 'rotate(0deg)',
-          }}
-          fill='none'
-          stroke='currentColor'
-          viewBox='0 0 24 24'
-          aria-hidden
-        >
-          <path strokeLinecap='round' strokeLinejoin='round' strokeWidth={2} d='M19 9l-7 7-7-7' />
-        </svg>
-      </div>
-
-      {/* Expandable details */}
-      <div
-        className='exp-expand'
-        style={{ gridTemplateRows: isOpen ? '1fr' : '0fr' }}
-      >
-        <div className='overflow-hidden'>
-          <div className='pb-5 pl-[calc(3px+12px+120px+16px)] pr-4 sm:pb-6 sm:pl-[calc(3px+12px+140px+24px)]'>
-            <p
-              className='text-sm leading-relaxed'
-              style={{ color: 'var(--text-muted)' }}
-            >
-              {entry.description}
-            </p>
-            <div className='mt-3 flex flex-wrap gap-2'>
-              {entry.tags.map((tag) => (
-                <span
-                  key={tag}
-                  className='rounded-full border px-2.5 py-0.5 text-xs font-medium'
-                  style={{
-                    borderColor: 'var(--border)',
-                    color: 'var(--text-muted)',
-                    fontFamily: 'var(--font-mono)',
-                  }}
-                >
-                  {tag}
-                </span>
-              ))}
-            </div>
-            {entry.orgHref && (
-              <a
-                href={entry.orgHref}
-                target='_blank'
-                rel='noopener noreferrer'
-                className='mt-3 inline-flex items-center gap-1 text-xs font-medium hover:underline'
-                style={{ color: 'var(--primary)' }}
-                onClick={(e) => e.stopPropagation()}
-              >
-                Visit {entry.org}
-                <svg className='h-3 w-3' fill='none' stroke='currentColor' viewBox='0 0 24 24'>
-                  <path strokeLinecap='round' strokeLinejoin='round' strokeWidth={2} d='M7 17L17 7M17 7H7M17 7v10' />
-                </svg>
-              </a>
-            )}
-          </div>
-        </div>
-      </div>
-    </div>
-  );
-}
+const PATH_D = "M 60 360 Q 260 80 480 240 T 900 180 T 1140 80";
+const VIEW_W = 1200;
+const VIEW_H = 460;
+const CARD_W = 264;
 
 export default function Experience() {
-  const sectionRef = useRef<HTMLElement>(null);
-  const [visible, setVisible] = useState(false);
-  const [openIdx, setOpenIdx] = useState<number | null>(0); // First one open by default
+  const pathRef = useRef<SVGPathElement>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
+  const [positions, setPositions] = useState<Array<{ x: number; y: number }>>(
+    [],
+  );
+  const [containerWidth, setContainerWidth] = useState(0);
+  const [inView, setInView] = useState(false);
+  const [hoveredIdx, setHoveredIdx] = useState<number | null>(null);
+
+  const computePositions = () => {
+    const path = pathRef.current;
+    const container = containerRef.current;
+    if (!path || !container) return;
+
+    const total = path.getTotalLength();
+    path.style.strokeDasharray = String(total);
+    if (!inView) path.style.strokeDashoffset = String(total);
+
+    const { width, height } = container.getBoundingClientRect();
+    setContainerWidth(width);
+
+    const scaleX = width / VIEW_W;
+    const scaleY = height / VIEW_H;
+
+    setPositions(
+      CHECKPOINTS.map((cp) => {
+        const pt = path.getPointAtLength(total * cp.t);
+        return { x: pt.x * scaleX, y: pt.y * scaleY };
+      }),
+    );
+  };
 
   useEffect(() => {
-    const el = sectionRef.current;
-    if (!el) return;
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry?.isIntersecting) setVisible(true);
-      },
-      { threshold: 0.1 },
-    );
-    observer.observe(el);
-    return () => observer.disconnect();
+    // Small delay so the container is laid out before measuring
+    const t = setTimeout(computePositions, 50);
+    const ro = new ResizeObserver(computePositions);
+    if (containerRef.current) ro.observe(containerRef.current);
+    return () => {
+      clearTimeout(t);
+      ro.disconnect();
+    };
   }, []);
+
+  useEffect(() => {
+    const el = containerRef.current;
+    if (!el) return;
+    const io = new IntersectionObserver(
+      ([entry]) => {
+        if (entry?.isIntersecting) {
+          setInView(true);
+          io.disconnect();
+        }
+      },
+      { threshold: 0.2 },
+    );
+    io.observe(el);
+    return () => io.disconnect();
+  }, []);
+
+  useEffect(() => {
+    const path = pathRef.current;
+    if (!path || !inView) return;
+    path.style.transition = "stroke-dashoffset 2.4s cubic-bezier(.5,.1,.3,1)";
+    path.style.strokeDashoffset = "0";
+  }, [inView]);
+
+  // Clamp card so it never overflows left or right edges
+  const cardLeft = (posX: number) => {
+    const ideal = posX - CARD_W / 2;
+    const min = 8;
+    const max = Math.max(8, containerWidth - CARD_W - 8);
+    return Math.max(min, Math.min(max, ideal));
+  };
+
+  const showCard = (i: number) => hoveredIdx === i;
 
   return (
     <section
-      id='experience'
-      ref={sectionRef}
-      className='w-full py-10 sm:py-14 md:py-16'
-      style={{ backgroundColor: 'var(--bg)' }}
-      aria-labelledby='experience-heading'
+      id="experience"
+      className="w-full py-24"
+      style={{
+        background:
+          "linear-gradient(180deg, transparent, var(--c-sky-50) 30%, var(--c-sky-50) 70%, transparent)",
+      }}
     >
-      <div className='mx-auto max-w-3xl px-6 sm:px-10 lg:px-12'>
-        <div className='flex items-center gap-3'>
-          <DoodleIcon
-            variant='briefcase'
-            className='h-5 w-5 shrink-0 text-[var(--text-muted)] sm:h-6 sm:w-6'
+      <div className="mx-auto max-w-5xl px-6 sm:px-10 lg:px-12">
+        {/* Section header */}
+        <div className="flex items-center gap-3 mb-4">
+          <div
+            className="h-0.5 w-6 rounded-full"
+            style={{ background: "var(--c-accent)" }}
           />
-          <h2
-            id='experience-heading'
-            className='font-serif text-2xl font-bold tracking-tight sm:text-3xl'
-            style={{ fontFamily: 'var(--font-serif)', color: 'var(--text)' }}
+          <span
+            className="text-xs uppercase tracking-widest font-medium"
+            style={{
+              fontFamily: "var(--font-mono)",
+              color: "var(--c-accent-ink)",
+            }}
           >
             Experience
-          </h2>
+          </span>
+        </div>
+        <h2
+          className="font-medium leading-tight mb-3"
+          style={{
+            fontFamily: "var(--font-display)",
+            fontSize: "clamp(32px, 4.5vw, 52px)",
+            letterSpacing: "-0.03em",
+            maxWidth: "22ch",
+            color: "var(--c-ink)",
+          }}
+        >
+          My path, plotted along a little arc.
+        </h2>
+        <p
+          className="mb-10 text-base"
+          style={{ color: "var(--c-ink-soft)", maxWidth: "56ch" }}
+        >
+          Hover or tap a checkpoint to read the story.
+        </p>
+
+        {/*
+          Extra vertical padding gives the hover cards room to extend above/below
+          the SVG without being clipped by a parent overflow. No overflow constraints here.
+        */}
+        <div
+          style={{
+            paddingTop: "160px",
+            paddingBottom: "160px",
+            marginTop: "-160px",
+            marginBottom: "-160px",
+          }}
+        >
+          <div
+            ref={containerRef}
+            className="relative w-full"
+            style={{ height: "clamp(220px, 28vw, 340px)" }}
+          >
+            <svg
+              className="absolute inset-0 w-full h-full"
+              viewBox={`0 0 ${VIEW_W} ${VIEW_H}`}
+              preserveAspectRatio="none"
+              style={{ overflow: "visible" }}
+              aria-hidden
+            >
+              <path
+                d={PATH_D}
+                fill="none"
+                stroke="var(--c-sky-200)"
+                strokeWidth="3"
+                strokeLinecap="round"
+              />
+              <path
+                ref={pathRef}
+                d={PATH_D}
+                fill="none"
+                stroke="var(--c-accent)"
+                strokeWidth="3"
+                strokeLinecap="round"
+                style={{
+                  filter: "drop-shadow(0 2px 10px oklch(55% 0.15 205 / 0.3))",
+                }}
+              />
+            </svg>
+
+            {positions.map((pos, i) => {
+              const cp = CHECKPOINTS[i];
+              if (!cp) return null;
+              const visible = showCard(i);
+              const left = cardLeft(pos.x);
+
+              return (
+                <div
+                  key={i}
+                  className="absolute z-10"
+                  style={{
+                    left: pos.x,
+                    top: pos.y,
+                    transform: "translate(-50%, -50%)",
+                  }}
+                  onMouseEnter={() => setHoveredIdx(i)}
+                  onMouseLeave={() => setHoveredIdx(null)}
+                >
+                  {/* Dot */}
+                  <div
+                    className="relative w-[22px] h-[22px] rounded-full border-4 transition-all duration-200"
+                    style={{
+                      background: visible ? "var(--c-accent)" : "var(--c-card)",
+                      borderColor: "var(--c-accent)",
+                      boxShadow: "0 6px 18px oklch(55% 0.15 205 / 0.35)",
+                      transform: visible ? "scale(1.3)" : "scale(1)",
+                    }}
+                    aria-label={`${cp.role} at ${cp.company}`}
+                  />
+
+                  {/* Card — positioned absolutely relative to the spline container, not the dot */}
+                  <div
+                    style={{
+                      position: "absolute",
+                      width: `${CARD_W}px`,
+                      left: `${left - pos.x}px`,
+                      ...(cp.side === "above"
+                        ? { bottom: "28px" }
+                        : { top: "28px" }),
+                      background: "var(--c-card)",
+                      border: "1px solid var(--c-line)",
+                      borderRadius: "16px",
+                      padding: "16px",
+                      boxShadow: "var(--shadow)",
+                      opacity: visible ? 1 : 0,
+                      transform: visible
+                        ? "translateY(0) scale(1)"
+                        : "translateY(8px) scale(0.96)",
+                      pointerEvents: visible ? "auto" : "none",
+                      transition:
+                        "opacity 0.2s ease, transform 0.25s cubic-bezier(.2,.9,.3,1.3)",
+                      zIndex: 20,
+                    }}
+                  >
+                    <span
+                      className="inline-block text-xs px-2 py-0.5 rounded-[6px]"
+                      style={{
+                        fontFamily: "var(--font-mono)",
+                        background: "var(--c-sky-100)",
+                        color: "var(--c-accent-ink)",
+                      }}
+                    >
+                      {cp.when}
+                    </span>
+                    <div
+                      className="font-semibold mt-2.5 mb-0.5 leading-tight"
+                      style={{
+                        fontFamily: "var(--font-display)",
+                        fontSize: "17px",
+                        letterSpacing: "-0.02em",
+                        color: "var(--c-ink)",
+                      }}
+                    >
+                      {cp.role}
+                    </div>
+                    <div
+                      className="font-semibold text-xs"
+                      style={{ color: "var(--c-accent-ink)" }}
+                    >
+                      {cp.orgHref ? (
+                        <a
+                          href={cp.orgHref}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="hover:underline"
+                          onClick={(e) => e.stopPropagation()}
+                        >
+                          {cp.company}
+                        </a>
+                      ) : (
+                        cp.company
+                      )}
+                    </div>
+                    <p
+                      className="mt-2.5 text-xs leading-[1.5]"
+                      style={{ color: "var(--c-ink-soft)" }}
+                    >
+                      {cp.story}
+                    </p>
+                    <div className="flex flex-wrap gap-1 mt-2.5">
+                      {cp.tools.map((t) => (
+                        <span
+                          key={t}
+                          className="text-[10px] px-1.5 py-0.5 rounded"
+                          style={{
+                            fontFamily: "var(--font-mono)",
+                            background: "var(--c-sky-50)",
+                            color: "var(--c-accent-ink)",
+                          }}
+                        >
+                          {t}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
         </div>
 
-        <div className='mt-8'>
-          {ENTRIES.map((entry, i) => (
-            <div
-              key={entry.id}
-              className='transition-all duration-500 ease-out'
-              style={{
-                opacity: visible ? 1 : 0,
-                transform: visible ? 'translateY(0)' : 'translateY(12px)',
-                transitionDelay: `${i * 120}ms`,
-              }}
-            >
-              <AccordionEntry
-                entry={entry}
-                isOpen={openIdx === i}
-                onToggle={() => setOpenIdx(openIdx === i ? null : i)}
-              />
-            </div>
-          ))}
+        <div
+          className="flex justify-between text-xs mt-4 px-1"
+          style={{ fontFamily: "var(--font-mono)", color: "var(--c-mute)" }}
+        >
+          <span>2021 — hello world</span>
+          <span>today ✦</span>
         </div>
       </div>
     </section>
