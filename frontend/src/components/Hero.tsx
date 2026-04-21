@@ -30,8 +30,7 @@ export default function Hero() {
     <section id="hero" className="w-full py-20 sm:py-24">
       <div className="mx-auto max-w-5xl px-6 sm:px-10 lg:px-12">
         <div
-          className="grid gap-12 items-center"
-          style={{ gridTemplateColumns: "minmax(0, 1.2fr) minmax(0, 1fr)" }}
+          className="grid grid-cols-1 items-center gap-12 md:grid-cols-[minmax(0,1.2fr)_minmax(0,1fr)]"
         >
           {/* Left: text */}
           <div>
