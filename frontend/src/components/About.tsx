@@ -1,8 +1,8 @@
 const FACTS = [
   { k: "location", v: "Hyderabad, India" },
   { k: "currently", v: "Garden Finance" },
-  { k: "languages", v: "Rust, TS, Python" },
-  { k: "passions", v: "Music & Chess" },
+  { k: "disciplines", v: "Code, Chess, Carnatic" },
+  { k: "rating", v: "FIDE 1640" },
 ] as const;
 
 export default function About() {
@@ -34,7 +34,7 @@ export default function About() {
             color: "var(--c-ink)",
           }}
         >
-          A curious engineer who builds across chains.
+          Three disciplines, one habit of mind.
         </h2>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-start">
@@ -43,9 +43,7 @@ export default function About() {
               className="text-lg leading-relaxed mb-4"
               style={{ color: "var(--c-ink-soft)" }}
             >
-              I'm a backend engineer based in Hyderabad, India. Most of my days
-              are spent writing Rust and TypeScript — building the
-              infrastructure that powers cross-chain swaps at{" "}
+              I'm a backend engineer at{" "}
               <a
                 href="https://garden.finance/"
                 target="_blank"
@@ -55,15 +53,18 @@ export default function About() {
               >
                 Garden Finance
               </a>
-              .
+              , based in Hyderabad. The work I'm proudest of looks boring
+              from the outside — cross-chain infrastructure that has to be
+              right, not clever.
             </p>
             <p
               className="text-lg leading-relaxed"
               style={{ color: "var(--c-ink-soft)" }}
             >
-              Outside work I sing Carnatic classical, play chess whenever I find
-              a worthy opponent, and occasionally get humbled by the Rust borrow
-              checker on weekend side projects.
+              Outside of engineering, I sing Carnatic classical and play
+              FIDE-rated chess. They look unrelated, but they're the same
+              craft underneath: notice the pattern, sit with it, repeat it
+              until it's yours. That's most of what I bring to a codebase too.
             </p>
           </div>
 
