@@ -206,9 +206,31 @@ body {
 @media (prefers-reduced-motion: reduce) {
   .wave-scroll,
   .bg-cloud,
-  .wave-hand-anim {
+  .wave-hand-anim,
+  .experience-pulse {
     animation: none;
   }
+}
+
+/* Pulse ring on Experience checkpoint dots — signals interactivity */
+@keyframes experience-pulse {
+  0% {
+    transform: scale(1);
+    opacity: 0.55;
+  }
+  80% {
+    transform: scale(2.4);
+    opacity: 0;
+  }
+  100% {
+    transform: scale(2.4);
+    opacity: 0;
+  }
+}
+
+.experience-pulse {
+  background: var(--c-accent);
+  animation: experience-pulse 2.2s ease-out infinite;
 }
 
 /* Wave divider — stronger in light, softer in dark */

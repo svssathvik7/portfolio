@@ -3,6 +3,7 @@ import { useEffect, useRef, useState } from "react";
 interface Checkpoint {
   t: number;
   when: string;
+  label: string;
   role: string;
   company: string;
   orgHref?: string;
@@ -15,6 +16,7 @@ const CHECKPOINTS: Checkpoint[] = [
   {
     t: 0.05,
     when: "2021 – 2025",
+    label: "2021 · College",
     role: "B.Tech CSE (Honors)",
     company: "MVGR College of Engineering",
     story:
@@ -25,6 +27,7 @@ const CHECKPOINTS: Checkpoint[] = [
   {
     t: 0.5,
     when: "Sep 2024 – Jun 2025",
+    label: "Sep '24 · Intern",
     role: "SDE Intern",
     company: "Garden Finance",
     orgHref: "https://garden.finance/",
@@ -36,6 +39,7 @@ const CHECKPOINTS: Checkpoint[] = [
   {
     t: 0.93,
     when: "Jun 2025 – present",
+    label: "Now · SDE I",
     role: "Software Developer I",
     company: "Garden Finance",
     orgHref: "https://garden.finance/",
@@ -235,17 +239,44 @@ export default function Experience() {
                   onMouseEnter={() => setHoveredIdx(i)}
                   onMouseLeave={() => setHoveredIdx(null)}
                 >
-                  {/* Dot */}
+                  {/* Dot + pulse ring */}
+                  <div className="relative">
+                    {!visible && (
+                      <span
+                        aria-hidden
+                        className="absolute inset-0 rounded-full pointer-events-none experience-pulse"
+                        style={{
+                          animationDelay: `${i * 0.6}s`,
+                        }}
+                      />
+                    )}
+                    <div
+                      className="relative w-[22px] h-[22px] rounded-full border-4 transition-all duration-200 cursor-pointer"
+                      style={{
+                        background: visible ? "var(--c-accent)" : "var(--c-card)",
+                        borderColor: "var(--c-accent)",
+                        boxShadow: "0 6px 18px oklch(55% 0.15 205 / 0.35)",
+                        transform: visible ? "scale(1.3)" : "scale(1)",
+                      }}
+                      aria-label={`${cp.role} at ${cp.company}`}
+                    />
+                  </div>
+
+                  {/* Always-visible mini-label — opposite side from the hover card */}
                   <div
-                    className="relative w-[22px] h-[22px] rounded-full border-4 transition-all duration-200"
+                    className="absolute left-1/2 -translate-x-1/2 whitespace-nowrap text-[11px] pointer-events-none transition-opacity duration-200"
                     style={{
-                      background: visible ? "var(--c-accent)" : "var(--c-card)",
-                      borderColor: "var(--c-accent)",
-                      boxShadow: "0 6px 18px oklch(55% 0.15 205 / 0.35)",
-                      transform: visible ? "scale(1.3)" : "scale(1)",
+                      ...(cp.side === "above"
+                        ? { top: "22px" }
+                        : { bottom: "22px" }),
+                      fontFamily: "var(--font-mono)",
+                      color: "var(--c-accent-ink)",
+                      opacity: visible ? 0 : 0.85,
+                      letterSpacing: "0.02em",
                     }}
-                    aria-label={`${cp.role} at ${cp.company}`}
-                  />
+                  >
+                    {cp.label}
+                  </div>
 
                   {/* Card — positioned absolutely relative to the spline container, not the dot */}
                   <div
